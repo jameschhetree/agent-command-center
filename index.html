@@ -629,9 +629,10 @@
   </section>
 
   <!-- QUICK LINKS - horizontal row below agents -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px">
     <a href="timeline.html" style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--text);transition:all 0.3s;font-size:13px;font-weight:500" onmouseover="this.style.borderColor='var(--indigo)'" onmouseout="this.style.borderColor='var(--border)'">Timeline</a>
     <a href="portfolio.html" style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--text);transition:all 0.3s;font-size:13px;font-weight:500" onmouseover="this.style.borderColor='var(--violet)'" onmouseout="this.style.borderColor='var(--border)'">Portfolio</a>
+    <a href="reports.html" style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--text);transition:all 0.3s;font-size:13px;font-weight:500" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--border)'">Reports</a>
     <a href="http://100.79.115.56:7700" target="_blank" style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--text);transition:all 0.3s;font-size:13px;font-weight:500" onmouseover="this.style.borderColor='var(--emerald)'" onmouseout="this.style.borderColor='var(--border)'">Pixel Agents</a>
     <a href="demo.html" style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;text-decoration:none;color:var(--text);transition:all 0.3s;font-size:13px;font-weight:500" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">Demo</a>
   </div>
@@ -794,6 +795,59 @@
       item.classList.add('visible');
     }, 700 + i * 100);
   });
+
+  // ---- LIVE DATA FETCH ----
+  (function loadLiveData() {
+    var API_URL = 'http://localhost:7901/api/stats';
+    fetch(API_URL, { mode: 'cors' })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        // Update stat cards with live values
+        var statCards = document.querySelectorAll('.stat-card');
+        // Reports Generated (index 0)
+        if (data.reports_generated !== undefined) {
+          var el0 = statCards[0].querySelector('.stat-value');
+          el0.setAttribute('data-target', data.reports_generated);
+          animateCount(el0, data.reports_generated, 2000);
+        }
+        // Messages Processed (index 1)
+        if (data.messages_processed !== undefined) {
+          var el1 = statCards[1].querySelector('.stat-value');
+          el1.setAttribute('data-target', data.messages_processed);
+          animateCount(el1, data.messages_processed, 2000);
+        }
+        // Trades Placed (index 2)
+        if (data.trades_placed !== undefined) {
+          var el2 = statCards[2].querySelector('.stat-value');
+          el2.setAttribute('data-target', data.trades_placed);
+          animateCount(el2, data.trades_placed, 2000);
+        }
+        // Bot status in health section
+        if (data.bot_status) {
+          var healthItems = document.querySelectorAll('.health-item');
+          healthItems.forEach(function(item) {
+            var name = item.querySelector('.health-name').textContent;
+            var statusEl = item.querySelector('.health-status');
+            if (name === 'Poly Bot') {
+              if (!data.bot_status.poly_bot) {
+                statusEl.innerHTML = '<span class="dot" style="background:var(--rose);animation:none"></span> Offline';
+                statusEl.style.color = 'var(--rose)';
+              }
+            }
+            if (name === 'Arb Bot') {
+              if (!data.bot_status.arb_bot) {
+                statusEl.innerHTML = '<span class="dot" style="background:var(--rose);animation:none"></span> Offline';
+                statusEl.style.color = 'var(--rose)';
+              }
+            }
+          });
+        }
+      })
+      .catch(function(err) {
+        // API unreachable (e.g. Vercel static deploy) -- keep static fallback values
+        console.log('[live-data] API unreachable, using static values');
+      });
+  })();
 
   // ---- PARALLAX ON SCROLL ----
   let ticking = false;

@@ -1,0 +1,632 @@
+[
+  {
+    "name": "Daily-Report-2026-04-17.pdf",
+    "size_kb": 89,
+    "mtime": "2026-04-17T12:00:08.542Z",
+    "category": "Daily-Report"
+  },
+  {
+    "name": "morning-brief-2026-04-17.pdf",
+    "size_kb": 368,
+    "mtime": "2026-04-17T11:00:08.688Z",
+    "category": "Brief"
+  },
+  {
+    "name": "CompetitorIQ-MAC-Agency.pdf",
+    "size_kb": 373,
+    "mtime": "2026-04-17T06:47:10.685Z",
+    "category": "CompetitorIQ"
+  },
+  {
+    "name": "LiveNation-Antitrust-Deep-Dive.pdf",
+    "size_kb": 349,
+    "mtime": "2026-04-17T01:47:48.407Z",
+    "category": "LiveNation"
+  },
+  {
+    "name": "SA-Brief-SFL-5Pager.pdf",
+    "size_kb": 254,
+    "mtime": "2026-04-16T18:15:25.572Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-ACL-5Pager.pdf",
+    "size_kb": 254,
+    "mtime": "2026-04-16T17:53:12.774Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "Daily-Report-2026-04-16.pdf",
+    "size_kb": 90,
+    "mtime": "2026-04-16T12:00:06.867Z",
+    "category": "Daily-Report"
+  },
+  {
+    "name": "morning-brief-2026-04-16.pdf",
+    "size_kb": 372,
+    "mtime": "2026-04-16T11:00:08.286Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-GS1-5Pager.pdf",
+    "size_kb": 252,
+    "mtime": "2026-04-15T20:12:39.041Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-GS1-1Pager.pdf",
+    "size_kb": 115,
+    "mtime": "2026-04-15T20:12:37.946Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "Daily-Report-2026-04-15.pdf",
+    "size_kb": 92,
+    "mtime": "2026-04-15T17:28:07.131Z",
+    "category": "Daily-Report"
+  },
+  {
+    "name": "morning-brief-2026-04-15.pdf",
+    "size_kb": 326,
+    "mtime": "2026-04-15T11:00:04.286Z",
+    "category": "Brief"
+  },
+  {
+    "name": "Daily-Report-2026-04-14.pdf",
+    "size_kb": 75,
+    "mtime": "2026-04-15T04:37:50.056Z",
+    "category": "Daily-Report"
+  },
+  {
+    "name": "SA-Brief-Finance-Policy-5Pager.pdf",
+    "size_kb": 255,
+    "mtime": "2026-04-14T18:16:50.357Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-Medicaid-LTC-5Pager.pdf",
+    "size_kb": 255,
+    "mtime": "2026-04-14T17:07:56.474Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-IBTTA-5Pager.pdf",
+    "size_kb": 253,
+    "mtime": "2026-04-14T14:43:47.005Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-IBTTA-1Pager.pdf",
+    "size_kb": 107,
+    "mtime": "2026-04-14T14:43:45.913Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-14.pdf",
+    "size_kb": 364,
+    "mtime": "2026-04-14T11:00:08.525Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-IB-SchoolChoice-5Pager.pdf",
+    "size_kb": 261,
+    "mtime": "2026-04-13T21:37:23.264Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "apna-pizza-brief-styled.pdf",
+    "size_kb": 416,
+    "mtime": "2026-04-13T16:54:35.807Z",
+    "category": "Apna-Pizza"
+  },
+  {
+    "name": "apna-pizza-report-styled.pdf",
+    "size_kb": 1137,
+    "mtime": "2026-04-13T16:53:21.910Z",
+    "category": "Apna-Pizza"
+  },
+  {
+    "name": "apna-pizza-brief.pdf",
+    "size_kb": 138,
+    "mtime": "2026-04-13T16:26:13.721Z",
+    "category": "Apna-Pizza"
+  },
+  {
+    "name": "apna-pizza-report.pdf",
+    "size_kb": 387,
+    "mtime": "2026-04-13T16:26:01.258Z",
+    "category": "Apna-Pizza"
+  },
+  {
+    "name": "morning-brief-2026-04-13.pdf",
+    "size_kb": 363,
+    "mtime": "2026-04-13T11:00:07.660Z",
+    "category": "Brief"
+  },
+  {
+    "name": "report-v6-test.pdf",
+    "size_kb": 507,
+    "mtime": "2026-04-12T14:09:40.985Z",
+    "category": "Report"
+  },
+  {
+    "name": "morning-brief-2026-04-12.pdf",
+    "size_kb": 362,
+    "mtime": "2026-04-12T11:00:07.934Z",
+    "category": "Brief"
+  },
+  {
+    "name": "MAC-Agency-CIQ-Report-v2.pdf",
+    "size_kb": 1138,
+    "mtime": "2026-04-12T02:33:27.556Z",
+    "category": "Report"
+  },
+  {
+    "name": "MAC-Agency-CIQ-Report.pdf",
+    "size_kb": 1124,
+    "mtime": "2026-04-12T02:12:13.520Z",
+    "category": "Report"
+  },
+  {
+    "name": "goodfellas-underground-lords-promo.pdf",
+    "size_kb": 688,
+    "mtime": "2026-04-12T00:28:59.895Z",
+    "category": "Other"
+  },
+  {
+    "name": "morning-brief-2026-04-11.pdf",
+    "size_kb": 335,
+    "mtime": "2026-04-11T11:00:04.582Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-NASWA-5Pager.pdf",
+    "size_kb": 361,
+    "mtime": "2026-04-10T20:31:14.537Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-10.pdf",
+    "size_kb": 363,
+    "mtime": "2026-04-10T11:00:08.285Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-CENTEGIX-5Pager.pdf",
+    "size_kb": 492,
+    "mtime": "2026-04-09T21:41:01.652Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-RxFunction-5Pager.pdf",
+    "size_kb": 477,
+    "mtime": "2026-04-09T19:38:55.498Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-CoinFlip-2026-04-09.pdf",
+    "size_kb": 218,
+    "mtime": "2026-04-09T19:09:55.318Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-09.pdf",
+    "size_kb": 332,
+    "mtime": "2026-04-09T11:00:11.602Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Advocacy-Campbells.pdf",
+    "size_kb": 120,
+    "mtime": "2026-04-08T18:36:08.212Z",
+    "category": "Other"
+  },
+  {
+    "name": "SA-Advocacy-Delta.pdf",
+    "size_kb": 112,
+    "mtime": "2026-04-08T18:33:51.733Z",
+    "category": "Other"
+  },
+  {
+    "name": "SA-Advocacy-Xylem.pdf",
+    "size_kb": 108,
+    "mtime": "2026-04-08T18:25:03.059Z",
+    "category": "Other"
+  },
+  {
+    "name": "morning-brief-2026-04-08.pdf",
+    "size_kb": 344,
+    "mtime": "2026-04-08T11:00:09.352Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-Upstream.pdf",
+    "size_kb": 111,
+    "mtime": "2026-04-07T19:53:08.492Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "StateAffairs-CompetitorIQ-20Page.pdf",
+    "size_kb": 1289,
+    "mtime": "2026-04-07T19:01:18.524Z",
+    "category": "CompetitorIQ"
+  },
+  {
+    "name": "morning-brief-2026-04-07.pdf",
+    "size_kb": 396,
+    "mtime": "2026-04-07T12:00:18.244Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-Meta-Platforms.pdf",
+    "size_kb": 113,
+    "mtime": "2026-04-07T06:16:20.280Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-MGM-Resorts.pdf",
+    "size_kb": 113,
+    "mtime": "2026-04-07T06:03:49.673Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-06.pdf",
+    "size_kb": 337,
+    "mtime": "2026-04-06T11:00:07.177Z",
+    "category": "Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-05.pdf",
+    "size_kb": 364,
+    "mtime": "2026-04-05T11:00:09.421Z",
+    "category": "Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-04.pdf",
+    "size_kb": 378,
+    "mtime": "2026-04-04T11:00:09.256Z",
+    "category": "Brief"
+  },
+  {
+    "name": "morning-brief-2026-04-03.pdf",
+    "size_kb": 371,
+    "mtime": "2026-04-03T14:00:06.667Z",
+    "category": "Brief"
+  },
+  {
+    "name": "sa-energy-manufacturing-lotsixteen.pdf",
+    "size_kb": 275,
+    "mtime": "2026-04-02T18:44:48.908Z",
+    "category": "Other"
+  },
+  {
+    "name": "sa-defense-aerospace-aia-v2.pdf",
+    "size_kb": 276,
+    "mtime": "2026-04-02T15:23:42.391Z",
+    "category": "Other"
+  },
+  {
+    "name": "morning-brief-2026-04-02.pdf",
+    "size_kb": 373,
+    "mtime": "2026-04-02T14:00:10.829Z",
+    "category": "Brief"
+  },
+  {
+    "name": "sa-defense-aerospace-aia.pdf",
+    "size_kb": 117,
+    "mtime": "2026-04-01T19:47:53.007Z",
+    "category": "Other"
+  },
+  {
+    "name": "sa-pharma-manufacturing-pharmalogic.pdf",
+    "size_kb": 117,
+    "mtime": "2026-04-01T18:56:47.005Z",
+    "category": "Other"
+  },
+  {
+    "name": "highlife-business-plan.pdf",
+    "size_kb": 121,
+    "mtime": "2026-04-01T18:49:44.111Z",
+    "category": "HighLife"
+  },
+  {
+    "name": "morning-brief-2026-04-01.pdf",
+    "size_kb": 374,
+    "mtime": "2026-04-01T14:00:10.032Z",
+    "category": "Brief"
+  },
+  {
+    "name": "highlife-pitch-deck.pdf",
+    "size_kb": 962,
+    "mtime": "2026-04-01T06:24:41.154Z",
+    "category": "HighLife"
+  },
+  {
+    "name": "alti-sunset-warm.pdf",
+    "size_kb": 6,
+    "mtime": "2026-04-01T01:34:41.705Z",
+    "category": "Alti"
+  },
+  {
+    "name": "alti-logo-variations.pdf",
+    "size_kb": 120,
+    "mtime": "2026-04-01T01:29:17.979Z",
+    "category": "Alti"
+  },
+  {
+    "name": "sa-music-education-nafme.pdf",
+    "size_kb": 259,
+    "mtime": "2026-03-31T18:15:02.411Z",
+    "category": "Other"
+  },
+  {
+    "name": "sa-rural-health-narhc.pdf",
+    "size_kb": 272,
+    "mtime": "2026-03-31T14:39:34.683Z",
+    "category": "Other"
+  },
+  {
+    "name": "morning-brief-2026-03-31.pdf",
+    "size_kb": 372,
+    "mtime": "2026-03-31T14:00:10.098Z",
+    "category": "Brief"
+  },
+  {
+    "name": "HighLife-Studios-20Page-Report.pdf",
+    "size_kb": 1317,
+    "mtime": "2026-03-30T23:24:44.432Z",
+    "category": "HighLife"
+  },
+  {
+    "name": "kalshi-arbitrage-report.pdf",
+    "size_kb": 765,
+    "mtime": "2026-03-30T23:10:16.662Z",
+    "category": "Report"
+  },
+  {
+    "name": "highlife-studios-demo.pdf",
+    "size_kb": 497,
+    "mtime": "2026-03-30T22:54:03.034Z",
+    "category": "HighLife"
+  },
+  {
+    "name": "morning-brief-2026-03-30.pdf",
+    "size_kb": 378,
+    "mtime": "2026-03-30T14:00:13.470Z",
+    "category": "Brief"
+  },
+  {
+    "name": "DMV-Wholesale-20Page-Report.pdf",
+    "size_kb": 1339,
+    "mtime": "2026-03-29T18:19:18.422Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "dmv-wholesale-demo.pdf",
+    "size_kb": 490,
+    "mtime": "2026-03-29T18:19:17.112Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "DMV-Wholesale-20Slide-PPT.pdf",
+    "size_kb": 894,
+    "mtime": "2026-03-29T18:15:01.650Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "morning-brief-2026-03-29.pdf",
+    "size_kb": 377,
+    "mtime": "2026-03-29T14:00:09.748Z",
+    "category": "Brief"
+  },
+  {
+    "name": "DMV-Wholesale-30Slide-PPT.pdf",
+    "size_kb": 1127,
+    "mtime": "2026-03-28T14:50:37.920Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "DMV-Wholesale-30Page-Report.pdf",
+    "size_kb": 1519,
+    "mtime": "2026-03-28T14:48:19.100Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "CompetitorIQ-Growth-Strategy-Research.pdf",
+    "size_kb": 181,
+    "mtime": "2026-03-28T14:24:21.792Z",
+    "category": "CompetitorIQ"
+  },
+  {
+    "name": "morning-brief-2026-03-28.pdf",
+    "size_kb": 390,
+    "mtime": "2026-03-28T14:00:10.615Z",
+    "category": "Brief"
+  },
+  {
+    "name": "DMV-Wholesale-Demo-Report.pdf",
+    "size_kb": 468,
+    "mtime": "2026-03-28T00:28:10.986Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "DMV-Wholesale-Full-Report.pdf",
+    "size_kb": 1120,
+    "mtime": "2026-03-28T00:28:10.277Z",
+    "category": "DMV-Wholesale"
+  },
+  {
+    "name": "morning-brief-2026-03-27.pdf",
+    "size_kb": 389,
+    "mtime": "2026-03-27T14:00:07.603Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-NCA-Confectionery.pdf",
+    "size_kb": 108,
+    "mtime": "2026-03-26T19:23:49.327Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-NASHIA-TBI.pdf",
+    "size_kb": 108,
+    "mtime": "2026-03-26T19:14:10.219Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-Composting-Waste.pdf",
+    "size_kb": 109,
+    "mtime": "2026-03-26T16:56:48.224Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-Finseca-TCJA.pdf",
+    "size_kb": 105,
+    "mtime": "2026-03-26T15:32:47.803Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-GrowthEnergy-E15.pdf",
+    "size_kb": 107,
+    "mtime": "2026-03-26T14:50:57.689Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "morning-brief-2026-03-26.pdf",
+    "size_kb": 376,
+    "mtime": "2026-03-26T14:00:17.360Z",
+    "category": "Brief"
+  },
+  {
+    "name": "SA-Brief-Pharma-PBM-5Pager.pdf",
+    "size_kb": 244,
+    "mtime": "2026-03-26T13:52:46.113Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-Brief-Pharma-PBM-1Pager.pdf",
+    "size_kb": 112,
+    "mtime": "2026-03-26T13:52:45.031Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "SA-5Pager-PA-HB2223.pdf",
+    "size_kb": 238,
+    "mtime": "2026-03-26T05:50:02.083Z",
+    "category": "Other"
+  },
+  {
+    "name": "SA-Brief-NY-A10141.pdf",
+    "size_kb": 97,
+    "mtime": "2026-03-26T05:42:53.558Z",
+    "category": "SA-Brief"
+  },
+  {
+    "name": "State-Affairs-Competitor-Event-Intel.pdf",
+    "size_kb": 146,
+    "mtime": "2026-03-25T17:03:13.196Z",
+    "category": "Other"
+  },
+  {
+    "name": "morning-brief-2026-03-25.pdf",
+    "size_kb": 392,
+    "mtime": "2026-03-25T14:00:15.223Z",
+    "category": "Brief"
+  },
+  {
+    "name": "Multiple-Motors-Demo-Report.pdf",
+    "size_kb": 465,
+    "mtime": "2026-03-25T03:25:00.983Z",
+    "category": "Demo"
+  },
+  {
+    "name": "Multiple-Motors-Full-Report.pdf",
+    "size_kb": 1134,
+    "mtime": "2026-03-25T03:25:00.322Z",
+    "category": "Report"
+  },
+  {
+    "name": "Imagine-AI-Demo-Report.pdf",
+    "size_kb": 457,
+    "mtime": "2026-03-24T15:35:48.940Z",
+    "category": "Demo"
+  },
+  {
+    "name": "Imagine-AI-Full-Report.pdf",
+    "size_kb": 1121,
+    "mtime": "2026-03-24T15:35:48.248Z",
+    "category": "Report"
+  },
+  {
+    "name": "morning-brief-2026-03-24.pdf",
+    "size_kb": 383,
+    "mtime": "2026-03-24T14:00:12.967Z",
+    "category": "Brief"
+  },
+  {
+    "name": "Revitalized-Solutions-V2-Demo.pdf",
+    "size_kb": 450,
+    "mtime": "2026-03-24T04:21:25.280Z",
+    "category": "Demo"
+  },
+  {
+    "name": "Revitalized-Solutions-V2-Full.pdf",
+    "size_kb": 1079,
+    "mtime": "2026-03-24T04:21:24.565Z",
+    "category": "Other"
+  },
+  {
+    "name": "Revitalized-Solutions-CompetitorIQ-Q1-2026.pdf",
+    "size_kb": 982,
+    "mtime": "2026-03-24T00:33:39.365Z",
+    "category": "CompetitorIQ"
+  },
+  {
+    "name": "morning-brief-2026-03-23.pdf",
+    "size_kb": 370,
+    "mtime": "2026-03-23T14:00:11.003Z",
+    "category": "Brief"
+  },
+  {
+    "name": "Daily-Report-test.pdf",
+    "size_kb": 262,
+    "mtime": "2026-03-23T11:45:59.515Z",
+    "category": "Daily-Report"
+  },
+  {
+    "name": "midnight-report.pdf",
+    "size_kb": 422,
+    "mtime": "2026-03-23T08:52:27.296Z",
+    "category": "Report"
+  },
+  {
+    "name": "report-v4.pdf",
+    "size_kb": 986,
+    "mtime": "2026-03-23T07:35:40.731Z",
+    "category": "Report"
+  },
+  {
+    "name": "demo-mini.pdf",
+    "size_kb": 493,
+    "mtime": "2026-03-23T07:28:09.017Z",
+    "category": "Demo"
+  },
+  {
+    "name": "report-v3.pdf",
+    "size_kb": 560,
+    "mtime": "2026-03-23T06:44:16.076Z",
+    "category": "Report"
+  },
+  {
+    "name": "test-demo-v2.pdf",
+    "size_kb": 373,
+    "mtime": "2026-03-23T06:35:49.462Z",
+    "category": "Demo"
+  },
+  {
+    "name": "test-demo-report.pdf",
+    "size_kb": 395,
+    "mtime": "2026-03-23T06:24:57.062Z",
+    "category": "Demo"
+  }
+]
