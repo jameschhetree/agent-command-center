@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>CompetitorIQ Demo</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f5f5f7;
+    --text-secondary: rgba(255,255,255,0.5);
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --amber: #fbbf24;
+    --radius: 16px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Ambient background glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(129,140,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 20s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 25s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes ambientDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 3%) scale(1.1); }
+  }
+
+  /* Subtle grid pattern */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glass card base */
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.35s var(--ease-smooth);
+  }
+
+  /* Main container */
+  .main {
+    width: 100%;
+    max-width: 620px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ====== LANDING STATE ====== */
+  .landing {
+    text-align: center;
+    width: 100%;
+    transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+  }
+  .landing.hidden {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.96);
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .logo {
+    font-size: clamp(36px, 8vw, 56px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 30%, #f5f5f7 60%, #818cf8 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    margin-bottom: 48px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .company-input {
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    outline: none;
+    transition: all 0.3s var(--ease-smooth);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .company-input::placeholder {
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+  .company-input:focus {
+    border-color: var(--indigo);
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.15), 0 0 40px -10px rgba(129,140,248,0.3);
+  }
+
+  .generate-btn {
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-spring);
+    letter-spacing: 0.3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #818cf8, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .generate-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 30px -8px rgba(99,102,241,0.5);
+  }
+  .generate-btn:hover::before { opacity: 1; }
+  .generate-btn:active { transform: scale(0.98); }
+  .generate-btn span { position: relative; z-index: 1; }
+  .generate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ====== RESEARCH STATE ====== */
+  .research {
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+  }
+  .research.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .research-title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .research-company {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 48px;
+    background: linear-gradient(135deg, #818cf8, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .steps-container {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.6s var(--ease-spring);
+  }
+  .step.active {
+    opacity: 1;
+    transform: translateX(0);
+    border-color: rgba(129,140,248,0.3);
+    background: rgba(129,140,248,0.06);
+  }
+  .step.done {
+    opacity: 0.5;
+    transform: translateX(-20px);
+  }
+
+  .step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .step-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(129,140,248,0.1);
+  }
+  .step-spinner svg {
+    width: 22px;
+    height: 22px;
+    animation: spin 1.2s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .step-check {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(52,211,153,0.1);
+    color: var(--emerald);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .step-text {
+    text-align: left;
+  }
+  .step-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .step-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* Progress bar */
+  .progress-track {
+    width: 100%;
+    max-width: 440px;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--indigo), var(--violet));
+    border-radius: 2px;
+    transition: width 1.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* ====== REPORT STATE ====== */
+  .report {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(60px);
+    pointer-events: none;
+    position: absolute;
+    transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-spring);
+  }
+  .report.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .report-card {
+    padding: 32px 28px;
+    width: 100%;
+  }
+
+  .report-header {
+    text-align: center;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .report-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(129,140,248,0.1);
+    border: 1px solid rgba(129,140,248,0.2);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 16px;
+  }
+
+  .report-company-name {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+
+  .report-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* Score ring */
+  .score-section {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .score-ring {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .score-ring svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .score-ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.06);
+    stroke-width: 6;
+  }
+  .score-ring-fill {
+    fill: none;
+    stroke: url(#scoreGradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 251.2;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .score-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-number {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  .score-details {
+    flex: 1;
+  }
+  .score-position {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .score-position-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .score-bar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .score-bar-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    width: 60px;
+    text-align: right;
+    font-weight: 500;
+  }
+  .score-bar-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Competitors */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .competitors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 400px) {
+    .competitors-grid { grid-template-columns: 1fr; }
+  }
+
+  .competitor-card {
+    padding: 16px 14px;
+    text-align: center;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.5s var(--ease-spring);
+  }
+  .competitor-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .competitor-card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .competitor-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 auto 10px;
+  }
+
+  .competitor-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .competitor-type {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* SWOT */
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .swot-cell {
+    padding: 16px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.5s var(--ease-spring);
+  }
+  .swot-cell.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .swot-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .swot-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* Download button */
+  .download-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-spring);
+    letter-spacing: 0.3px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .download-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #818cf8, #a78bfa);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .download-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px -8px rgba(99,102,241,0.5);
+  }
+  .download-btn:hover::before { opacity: 1; }
+  .download-btn span { position: relative; z-index: 1; }
+
+  .reset-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+  }
+  .reset-btn:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+    background: var(--surface);
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(52,211,153,0.15);
+    border: 1px solid rgba(52,211,153,0.3);
+    color: var(--emerald);
+    padding: 14px 28px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.4s var(--ease-spring);
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  @media (pointer: coarse) {
+    .company-input { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="main">
+
+  <!-- LANDING STATE -->
+  <div class="landing" id="landing">
+    <div class="logo">CompetitorIQ</div>
+    <div class="subtitle">AI-Powered Competitive Intelligence</div>
+    <form class="input-group" id="searchForm" autocomplete="off">
+      <input
+        type="text"
+        class="company-input"
+        id="companyInput"
+        placeholder="Enter a company name..."
+        required
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button type="submit" class="generate-btn" id="generateBtn">
+        <span>Generate Report</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- RESEARCH STATE -->
+  <div class="research" id="research">
+    <div class="research-title">Analyzing</div>
+    <div class="research-company" id="researchCompany"></div>
+
+    <div class="steps-container" id="stepsContainer">
+      <div class="step" id="step0">
+        <div class="step-spinner">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" stroke-width="2.5"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="step-text">
+          <div class="step-label">Scanning the web</div>
+          <div class="step-detail">Crawling news, filings, and social signals...</div>
+        </div>
+      </div>
+      <div class="step" id="step1">
+        <div class="step-spinner">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" stroke-width="2.5"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="step-text">
+          <div class="step-label">Analyzing competitors</div>
+          <div class="step-detail">Identifying market position and key rivals...</div>
+        </div>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-spinner">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" stroke-width="2.5"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="step-text">
+          <div class="step-label">Generating intelligence report</div>
+          <div class="step-detail">Building SWOT analysis and scoring model...</div>
+        </div>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-spinner">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" stroke-width="2.5"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="step-text">
+          <div class="step-label">Report complete</div>
+          <div class="step-detail">Finalizing deliverable...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- REPORT STATE -->
+  <div class="report" id="report">
+    <div class="report-card glass">
+
+      <div class="report-header">
+        <div class="report-badge">CompetitorIQ Report</div>
+        <div class="report-company-name" id="reportCompanyName"></div>
+        <div class="report-subtitle">Competitive Intelligence Summary</div>
+      </div>
+
+      <!-- Score -->
+      <div class="score-section">
+        <div class="score-ring">
+          <svg viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#818cf8"/>
+                <stop offset="100%" style="stop-color:#a78bfa"/>
+              </linearGradient>
+            </defs>
+            <circle class="score-ring-bg" cx="50" cy="50" r="40"/>
+            <circle class="score-ring-fill" id="scoreRingFill" cx="50" cy="50" r="40"/>
+          </svg>
+          <div class="score-value">
+            <div class="score-number" id="scoreNumber">0</div>
+            <div class="score-label">Score</div>
+          </div>
+        </div>
+        <div class="score-details">
+          <div class="score-position" id="marketPosition">Strong Challenger</div>
+          <div class="score-position-label">Market Position</div>
+          <div class="score-bar-group">
+            <div class="score-bar-row">
+              <span class="score-bar-name">Brand</span>
+              <div class="score-bar-track">
+                <div class="score-bar-fill" id="barBrand" style="background: var(--indigo);"></div>
+              </div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-name">Product</span>
+              <div class="score-bar-track">
+                <div class="score-bar-fill" id="barProduct" style="background: var(--violet);"></div>
+              </div>
+            </div>
+            <div class="score-bar-row">
+              <span class="score-bar-name">Growth</span>
+              <div class="score-bar-track">
+                <div class="score-bar-fill" id="barGrowth" style="background: var(--emerald);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Competitors -->
+      <div class="section-label">Key Competitors</div>
+      <div class="competitors-grid" id="competitorsGrid">
+        <div class="competitor-card" id="comp0">
+          <div class="competitor-avatar" style="background: linear-gradient(135deg, #6366f1, #818cf8);" id="comp0Avatar">A</div>
+          <div class="competitor-name" id="comp0Name">Acme Corp</div>
+          <div class="competitor-type" id="comp0Type">Direct</div>
+        </div>
+        <div class="competitor-card" id="comp1">
+          <div class="competitor-avatar" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);" id="comp1Avatar">B</div>
+          <div class="competitor-name" id="comp1Name">Beta Inc</div>
+          <div class="competitor-type" id="comp1Type">Direct</div>
+        </div>
+        <div class="competitor-card" id="comp2">
+          <div class="competitor-avatar" style="background: linear-gradient(135deg, #059669, #34d399);" id="comp2Avatar">C</div>
+          <div class="competitor-name" id="comp2Name">Gamma Ltd</div>
+          <div class="competitor-type" id="comp2Type">Indirect</div>
+        </div>
+      </div>
+
+      <!-- SWOT -->
+      <div class="section-label">SWOT Analysis</div>
+      <div class="swot-grid">
+        <div class="swot-cell" id="swotS" style="background: rgba(52,211,153,0.04);">
+          <div class="swot-label" style="color: var(--emerald);">Strengths</div>
+          <div class="swot-text" id="swotSText">Strong brand recognition and loyal customer base</div>
+        </div>
+        <div class="swot-cell" id="swotW" style="background: rgba(251,113,133,0.04);">
+          <div class="swot-label" style="color: var(--rose);">Weaknesses</div>
+          <div class="swot-text" id="swotWText">Limited international presence and high customer acquisition cost</div>
+        </div>
+        <div class="swot-cell" id="swotO" style="background: rgba(129,140,248,0.04);">
+          <div class="swot-label" style="color: var(--indigo);">Opportunities</div>
+          <div class="swot-text" id="swotOText">Expanding AI integration and emerging market entry</div>
+        </div>
+        <div class="swot-cell" id="swotT" style="background: rgba(251,191,36,0.04);">
+          <div class="swot-label" style="color: var(--amber);">Threats</div>
+          <div class="swot-text" id="swotTText">Regulatory changes and increasing competition from startups</div>
+        </div>
+      </div>
+
+      <button class="download-btn" id="downloadBtn">
+        <span>Download Full Report</span>
+      </button>
+      <button class="reset-btn" id="resetBtn">Try Another Company</button>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Report queued for download</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const landing = document.getElementById('landing');
+  const research = document.getElementById('research');
+  const report = document.getElementById('report');
+  const form = document.getElementById('searchForm');
+  const input = document.getElementById('companyInput');
+  const progressFill = document.getElementById('progressFill');
+  const toast = document.getElementById('toast');
+
+  // Company-specific mock data
+  const companyData = {
+    // Default data generator
+    generate: function(name) {
+      const n = name.toLowerCase();
+      const hash = n.split('').reduce(function(a, c) { return a + c.charCodeAt(0); }, 0);
+      const score = 72 + (hash % 23);
+      const positions = ['Market Leader', 'Strong Challenger', 'Rising Contender', 'Niche Specialist', 'Fast Mover'];
+      const position = positions[hash % positions.length];
+
+      const competitorSets = [
+        [{n:'Salesforce',t:'Direct'},{n:'HubSpot',t:'Direct'},{n:'Zoho',t:'Indirect'}],
+        [{n:'Microsoft',t:'Direct'},{n:'Google',t:'Direct'},{n:'Notion',t:'Indirect'}],
+        [{n:'Stripe',t:'Direct'},{n:'Square',t:'Direct'},{n:'PayPal',t:'Indirect'}],
+        [{n:'Slack',t:'Direct'},{n:'Teams',t:'Direct'},{n:'Discord',t:'Indirect'}],
+        [{n:'AWS',t:'Direct'},{n:'Azure',t:'Direct'},{n:'Vercel',t:'Indirect'}],
+      ];
+      const comps = competitorSets[hash % competitorSets.length];
+
+      const strengths = [
+        'Strong brand recognition and loyal customer base',
+        'Industry-leading technology stack with deep moats',
+        'Exceptional talent density and engineering culture',
+        'First-mover advantage in core market segment',
+      ];
+      const weaknesses = [
+        'Limited international presence and high CAC',
+        'Dependency on single revenue stream',
+        'Slow enterprise sales cycle and complex pricing',
+        'Technical debt in legacy product lines',
+      ];
+      const opportunities = [
+        'Expanding AI integration and emerging market entry',
+        'Strategic M&A targets in adjacent verticals',
+        'Growing demand for automation in target segment',
+        'Untapped SMB market with self-serve model',
+      ];
+      const threats = [
+        'Regulatory changes and rising startup competition',
+        'Open-source alternatives gaining enterprise traction',
+        'Market consolidation reducing available prospects',
+        'Macroeconomic headwinds impacting buyer budgets',
+      ];
+
+      return {
+        score: score,
+        position: position,
+        brand: 60 + (hash % 30),
+        product: 65 + ((hash * 3) % 28),
+        growth: 50 + ((hash * 7) % 40),
+        competitors: comps,
+        strengths: strengths[hash % strengths.length],
+        weaknesses: weaknesses[hash % weaknesses.length],
+        opportunities: opportunities[hash % opportunities.length],
+        threats: threats[hash % threats.length],
+      };
+    }
+  };
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  }
+
+  function animateCount(el, target, duration) {
+    var start = performance.now();
+    function step(now) {
+      var progress = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function resetSteps() {
+    for (var i = 0; i < 4; i++) {
+      var step = document.getElementById('step' + i);
+      step.classList.remove('active', 'done');
+      // Reset to spinner
+      var iconArea = step.querySelector('.step-check');
+      if (iconArea) {
+        var spinner = document.createElement('div');
+        spinner.className = 'step-spinner';
+        spinner.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="rgba(129,140,248,0.3)" stroke-width="2.5"/><path d="M12 2a10 10 0 0 1 10 10" stroke="#818cf8" stroke-width="2.5" stroke-linecap="round"/></svg>';
+        step.replaceChild(spinner, iconArea);
+      }
+    }
+    progressFill.style.width = '0%';
+  }
+
+  function completeStep(index) {
+    var step = document.getElementById('step' + index);
+    var spinner = step.querySelector('.step-spinner');
+    if (spinner) {
+      var check = document.createElement('div');
+      check.className = 'step-check';
+      check.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+      step.replaceChild(check, spinner);
+    }
+    step.classList.remove('active');
+    step.classList.add('done');
+  }
+
+  function runResearch(companyName) {
+    // Hide landing, show research
+    landing.classList.add('hidden');
+    setTimeout(function() {
+      research.classList.add('active');
+      document.getElementById('researchCompany').textContent = companyName;
+
+      // Step 0
+      setTimeout(function() {
+        document.getElementById('step0').classList.add('active');
+        progressFill.style.width = '15%';
+      }, 200);
+
+      // Step 1
+      setTimeout(function() {
+        completeStep(0);
+        document.getElementById('step1').classList.add('active');
+        progressFill.style.width = '40%';
+      }, 2200);
+
+      // Step 2
+      setTimeout(function() {
+        completeStep(1);
+        document.getElementById('step2').classList.add('active');
+        progressFill.style.width = '65%';
+      }, 4200);
+
+      // Step 3
+      setTimeout(function() {
+        completeStep(2);
+        document.getElementById('step3').classList.add('active');
+        progressFill.style.width = '90%';
+      }, 6200);
+
+      // Complete
+      setTimeout(function() {
+        completeStep(3);
+        progressFill.style.width = '100%';
+      }, 7400);
+
+      // Show report
+      setTimeout(function() {
+        research.classList.remove('active');
+        showReport(companyName);
+      }, 8200);
+
+    }, 500);
+  }
+
+  function showReport(companyName) {
+    var data = companyData.generate(companyName);
+
+    document.getElementById('reportCompanyName').textContent = companyName;
+    document.getElementById('marketPosition').textContent = data.position;
+
+    // Score ring
+    var circumference = 2 * Math.PI * 40; // 251.2
+    var offset = circumference - (data.score / 100) * circumference;
+    var ringFill = document.getElementById('scoreRingFill');
+    ringFill.style.strokeDashoffset = circumference;
+
+    report.classList.add('active');
+
+    // Animate score after reveal
+    setTimeout(function() {
+      ringFill.style.strokeDashoffset = offset;
+      animateCount(document.getElementById('scoreNumber'), data.score, 1500);
+
+      // Score bars
+      document.getElementById('barBrand').style.width = data.brand + '%';
+      document.getElementById('barProduct').style.width = data.product + '%';
+      document.getElementById('barGrowth').style.width = data.growth + '%';
+    }, 300);
+
+    // Competitors
+    data.competitors.forEach(function(c, i) {
+      document.getElementById('comp' + i + 'Name').textContent = c.n;
+      document.getElementById('comp' + i + 'Type').textContent = c.t;
+      document.getElementById('comp' + i + 'Avatar').textContent = c.n.charAt(0);
+      setTimeout(function() {
+        document.getElementById('comp' + i).classList.add('visible');
+      }, 600 + i * 150);
+    });
+
+    // SWOT
+    document.getElementById('swotSText').textContent = data.strengths;
+    document.getElementById('swotWText').textContent = data.weaknesses;
+    document.getElementById('swotOText').textContent = data.opportunities;
+    document.getElementById('swotTText').textContent = data.threats;
+
+    var swotCells = ['swotS', 'swotW', 'swotO', 'swotT'];
+    swotCells.forEach(function(id, i) {
+      setTimeout(function() {
+        document.getElementById(id).classList.add('visible');
+      }, 900 + i * 120);
+    });
+  }
+
+  function resetAll() {
+    report.classList.remove('active');
+    resetSteps();
+
+    // Reset competitor + swot visibility
+    for (var i = 0; i < 3; i++) {
+      document.getElementById('comp' + i).classList.remove('visible');
+    }
+    ['swotS','swotW','swotO','swotT'].forEach(function(id) {
+      document.getElementById(id).classList.remove('visible');
+    });
+
+    // Reset score ring
+    document.getElementById('scoreRingFill').style.strokeDashoffset = '251.2';
+    document.getElementById('scoreNumber').textContent = '0';
+    document.getElementById('barBrand').style.width = '0%';
+    document.getElementById('barProduct').style.width = '0%';
+    document.getElementById('barGrowth').style.width = '0%';
+
+    setTimeout(function() {
+      landing.classList.remove('hidden');
+      input.value = '';
+      input.focus();
+    }, 400);
+  }
+
+  // Events
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = input.value.trim();
+    if (!name) return;
+    document.getElementById('generateBtn').disabled = true;
+    runResearch(name);
+  });
+
+  document.getElementById('downloadBtn').addEventListener('click', function() {
+    showToast('Report queued for download');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    document.getElementById('generateBtn').disabled = false;
+    resetAll();
+  });
+
+  // Auto-focus on load
+  setTimeout(function() { input.focus(); }, 300);
+
+})();
+</script>
+
+</body>
+</html>

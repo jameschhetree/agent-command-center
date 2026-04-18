@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Portfolio -- Agent Command Center</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f5f5f7;
+    --text-secondary: rgba(255,255,255,0.5);
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --amber: #fbbf24;
+    --cyan: #22d3ee;
+    --radius: 16px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(129,140,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 20s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 25s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes ambientDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 3%) scale(1.1); }
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px 120px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) forwards;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--text); }
+  .back-link svg { width: 16px; height: 16px; }
+
+  .header-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(167,139,250,0.1);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--violet);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 30%, #f5f5f7 60%, #818cf8 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    line-height: 1.1;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  .counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .counter-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--indigo);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- FILTER BUTTONS ---- */
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.1s forwards;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s var(--ease-smooth);
+    font-family: inherit;
+    letter-spacing: 0.3px;
+  }
+  .filter-btn:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    color: var(--text);
+  }
+  .filter-btn.active {
+    background: rgba(129,140,248,0.15);
+    border-color: rgba(129,140,248,0.3);
+    color: var(--indigo);
+  }
+
+  /* ---- PORTFOLIO GRID ---- */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Mobile: horizontal scroll-snap carousel */
+  @media (max-width: 600px) {
+    .portfolio-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 16px;
+      padding-bottom: 16px;
+      scroll-padding: 20px;
+    }
+    .portfolio-grid::-webkit-scrollbar { height: 4px; }
+    .portfolio-grid::-webkit-scrollbar-track { background: transparent; }
+    .portfolio-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  }
+
+  /* ---- PORTFOLIO CARD ---- */
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.35s var(--ease-smooth);
+  }
+
+  .port-card {
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 600px) {
+    .port-card {
+      min-width: 280px;
+      flex-shrink: 0;
+    }
+  }
+
+  .port-card.visible {
+    animation: cardEntrance 0.7s var(--ease-spring) forwards;
+  }
+
+  @keyframes cardEntrance {
+    from { opacity: 0; transform: translateY(30px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .port-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.8;
+  }
+
+  .port-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: radial-gradient(circle at 20% 20%, var(--accent), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .port-card:hover::after { opacity: 0.05; }
+  .port-card:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 40px -10px var(--accent);
+  }
+
+  .port-card.hidden {
+    display: none;
+  }
+
+  .port-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+
+  .tag-report {
+    background: rgba(129,140,248,0.15);
+    color: var(--indigo);
+    border: 1px solid rgba(129,140,248,0.2);
+  }
+  .tag-bot {
+    background: rgba(52,211,153,0.15);
+    color: var(--emerald);
+    border: 1px solid rgba(52,211,153,0.2);
+  }
+  .tag-dashboard {
+    background: rgba(167,139,250,0.15);
+    color: var(--violet);
+    border: 1px solid rgba(167,139,250,0.2);
+  }
+  .tag-tool {
+    background: rgba(251,191,36,0.15);
+    color: var(--amber);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+
+  .port-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .port-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    min-height: 40px;
+  }
+
+  .port-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .port-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .port-stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- SCROLLBAR ---- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  @media (pointer: coarse) {
+    .port-card { min-height: 180px; }
+    .filter-btn { min-height: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="container">
+
+  <header class="header">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Command Center
+    </a>
+    <div class="header-label">Shipped This Week</div>
+    <h1>PORTFOLIO</h1>
+    <div class="header-sub">Everything the AI team built and delivered</div>
+    <div class="counter">
+      <span class="counter-num" id="visibleCount">12</span> deliverables shipped
+    </div>
+  </header>
+
+  <!-- FILTER BUTTONS -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="report">Reports</button>
+    <button class="filter-btn" data-filter="bot">Bots</button>
+    <button class="filter-btn" data-filter="dashboard">Dashboards</button>
+    <button class="filter-btn" data-filter="tool">Tools</button>
+  </div>
+
+  <!-- PORTFOLIO GRID -->
+  <div class="portfolio-grid" id="portfolioGrid">
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--indigo)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Grant Beebe 5-Pager</div>
+      <div class="port-desc">Medicaid long-term care policy brief. State Affairs format.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">5</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--indigo)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">John Berlau 5-Pager</div>
+      <div class="port-desc">Finance policy brief. CEI regulatory reform analysis.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">5</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--indigo)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Gill Stevens 1+5 Pager</div>
+      <div class="port-desc">GS1 US supply chain standards. Dual format delivery.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">6</span>
+        <span class="port-stat-label">pages total</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--indigo)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Mark Freeman 5-Pager</div>
+      <div class="port-desc">American Cruise Lines. Industry and competitive positioning.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">5</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--indigo)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Kristi Hamrick 5-Pager</div>
+      <div class="port-desc">Students for Life Action. Policy advocacy landscape.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">5</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--rose)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Live Nation 20-Page Deep Dive</div>
+      <div class="port-desc">Antitrust verdict analysis. DOJ case, state AGs, remedies.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">20</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--violet)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">MAC Agency CompetitorIQ</div>
+      <div class="port-desc">Full competitive intelligence report. Market analysis deep dive.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">20</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="report" style="--accent: var(--emerald)">
+      <span class="port-tag tag-report">Report</span>
+      <div class="port-title">Daily Intelligence Brief</div>
+      <div class="port-desc">Oura health data, trading signals, and news digest combined.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">3</span>
+        <span class="port-stat-label">data sources</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="bot" style="--accent: var(--emerald)">
+      <span class="port-tag tag-bot">Bot</span>
+      <div class="port-title">Kalshi Arb Bot</div>
+      <div class="port-desc">Arbitrage scanner. 7 critical bugs fixed, 10x market coverage.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">7</span>
+        <span class="port-stat-label">bugs fixed</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="bot" style="--accent: var(--emerald)">
+      <span class="port-tag tag-bot">Bot</span>
+      <div class="port-title">Directional Poly Betting Bot</div>
+      <div class="port-desc">Scanner + Brain + Kelly criterion sizing. Built from scratch.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">3</span>
+        <span class="port-stat-label">trades placed</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="dashboard" style="--accent: var(--violet)">
+      <span class="port-tag tag-dashboard">Dashboard</span>
+      <div class="port-title">Agent Command Center</div>
+      <div class="port-desc">This dashboard. Real-time agent monitoring, glassmorphic UI.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">3</span>
+        <span class="port-stat-label">pages</span>
+      </div>
+    </div>
+
+    <div class="glass port-card" data-cat="tool" style="--accent: var(--amber)">
+      <span class="port-tag tag-tool">Tool</span>
+      <div class="port-title">Pixel Agents</div>
+      <div class="port-desc">D-pad movement + Assemble features. VS Code pixel office.</div>
+      <div class="port-stat">
+        <span class="port-stat-value">2</span>
+        <span class="port-stat-label">features shipped</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ---- FILTER LOGIC ----
+  var buttons = document.querySelectorAll('.filter-btn');
+  var cards = document.querySelectorAll('.port-card');
+  var countEl = document.getElementById('visibleCount');
+
+  function filterCards(cat) {
+    var visible = 0;
+    cards.forEach(function(card) {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    countEl.textContent = visible;
+  }
+
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      filterCards(btn.getAttribute('data-filter'));
+    });
+  });
+
+  // ---- STAGGERED CARD ENTRANCE ----
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        // Find index among visible cards for stagger
+        var allCards = Array.from(document.querySelectorAll('.port-card:not(.hidden)'));
+        var idx = allCards.indexOf(entry.target);
+        var delay = Math.max(0, idx) * 80;
+        setTimeout(function() {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(function(card) {
+    observer.observe(card);
+  });
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Beshear Fundraiser · Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f0e8da;
+  --paper-soft: #e8dfcd;
+  --paper-edge: #ddd1ba;
+  --ink: #1a1512;
+  --ink-soft: #3d342c;
+  --ink-muted: #6a5e50;
+  --rust: #9a4a2a;
+  --rust-deep: #7a3a20;
+  --olive: #6b6a3d;
+  --tan: #a88560;
+  --brown-warn: #5a3828;
+  --sand: #c9b896;
+  --line: rgba(26, 21, 18, 0.12);
+  --line-strong: rgba(26, 21, 18, 0.22);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  line-height: 1.45;
+  font-feature-settings: 'ss01', 'ss02';
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+body::before {
+  content: ""; position: fixed; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(154, 74, 42, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(107, 106, 61, 0.05) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: ""; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.07 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.5; pointer-events: none; z-index: 1; mix-blend-mode: multiply;
+}
+.wrap { position: relative; z-index: 2; max-width: 560px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+header { padding: 36px 0 24px; border-bottom: 1px solid var(--line-strong); position: relative; }
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--rust);
+  margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+}
+.eyebrow::before, .eyebrow::after {
+  content: ""; height: 1px; background: var(--rust); opacity: 0.5; flex: 0 0 18px;
+}
+.eyebrow::after { flex: 1; }
+.title {
+  font-family: 'Fraunces', serif; font-size: 52px; font-weight: 300;
+  font-style: italic; line-height: 0.92; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 14px;
+}
+.title em { font-style: normal; font-weight: 500; color: var(--rust); }
+.meta {
+  font-family: 'Instrument Serif', serif; font-size: 19px;
+  line-height: 1.35; color: var(--ink-soft); font-style: italic; margin-bottom: 8px;
+}
+.meta-row {
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted);
+  display: flex; gap: 14px; flex-wrap: wrap; padding-top: 12px;
+}
+.meta-row span { display: flex; align-items: center; gap: 6px; }
+.meta-row span::before {
+  content: ""; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--tan); display: inline-block;
+}
+
+/* SECTION NAV */
+.section-nav {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--paper); padding: 14px 0 12px;
+  margin: 0 -20px; padding-left: 20px; padding-right: 20px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.section-nav-inner {
+  display: flex; gap: 6px; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.section-nav-inner::-webkit-scrollbar { display: none; }
+.section-nav a {
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none;
+  padding: 7px 12px; border: 1px solid var(--line-strong);
+  border-radius: 100px; transition: all 0.2s ease;
+}
+.section-nav a:active { background: var(--ink); color: var(--paper); }
+
+/* FILTERS */
+.filters-wrap { padding: 28px 0 18px; }
+.filters-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 12px;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter {
+  font-family: 'Fraunces', serif; font-size: 14px; font-weight: 400;
+  padding: 8px 14px; background: transparent; color: var(--ink-soft);
+  border: 1px solid var(--line-strong); border-radius: 100px;
+  cursor: pointer; transition: all 0.2s ease; font-style: italic;
+}
+.filter.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.filter .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-style: normal; margin-left: 5px; opacity: 0.6;
+}
+
+/* SECTION TITLE */
+.section-title { margin: 36px 0 16px; display: flex; align-items: baseline; gap: 12px; }
+.section-title .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--rust); letter-spacing: 0.1em;
+}
+.section-title .label {
+  font-family: 'Fraunces', serif; font-size: 26px; font-weight: 400;
+  font-style: italic; color: var(--ink); letter-spacing: -0.01em;
+}
+.section-title .rule { flex: 1; height: 1px; background: var(--line-strong); }
+
+/* PERSON CARD */
+.cards { display: flex; flex-direction: column; gap: 10px; }
+.card {
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  border-radius: 4px; overflow: hidden;
+  transition: all 0.25s ease; position: relative;
+}
+.card.hidden { display: none; }
+.card.priority { border-left: 3px solid var(--rust); }
+.card.connect  { border-left: 3px solid var(--olive); }
+.card.anchor   { border-left: 3px solid var(--tan); }
+.card.caution  { border-left: 3px solid var(--brown-warn); }
+.card.vip      { border-left: 3px solid var(--ink); background: var(--paper-edge); }
+
+.card-head {
+  padding: 14px;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 12px; align-items: center;
+  cursor: pointer; user-select: none;
+}
+
+/* MONOGRAM AVATAR */
+.avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 15px; letter-spacing: 0.02em;
+  flex-shrink: 0; position: relative;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.card.priority .avatar { background: var(--rust); color: var(--paper); }
+.card.connect .avatar  { background: var(--olive); color: var(--paper); }
+.card.anchor .avatar   { background: var(--tan); color: var(--ink); }
+.card.caution .avatar  { background: var(--brown-warn); color: var(--paper); }
+.card.vip .avatar      { background: var(--ink); color: var(--paper); }
+
+.avatar::after {
+  content: ""; position: absolute; inset: -3px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0,0,0,0.18);
+  pointer-events: none; opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.card.open .avatar::after { opacity: 1; }
+
+.card-main { min-width: 0; }
+.card-name {
+  font-family: 'Fraunces', serif; font-size: 17.5px;
+  font-weight: 500; line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink); margin-bottom: 3px;
+}
+.card-role {
+  font-family: 'Instrument Serif', serif;
+  font-size: 13.5px; font-style: italic;
+  line-height: 1.3; color: var(--ink-soft);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+
+.card-right {
+  display: flex; flex-direction: column;
+  align-items: flex-end; gap: 8px; flex-shrink: 0;
+}
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 7px; border-radius: 3px;
+  white-space: nowrap; font-weight: 500;
+}
+.card.priority .card-tag { background: var(--rust); color: var(--paper); }
+.card.connect .card-tag  { background: var(--olive); color: var(--paper); }
+.card.anchor .card-tag   { background: var(--tan); color: var(--ink); }
+.card.caution .card-tag  { background: var(--brown-warn); color: var(--paper); }
+.card.vip .card-tag      { background: var(--ink); color: var(--paper); }
+
+.card-chevron {
+  opacity: 0.35;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex; align-items: center; justify-content: center;
+  width: 18px;
+}
+.card.open .card-chevron { transform: rotate(180deg); opacity: 0.7; }
+.card-chevron svg { width: 12px; height: 12px; }
+
+.card-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.card.open .card-body { max-height: 1200px; }
+.card-body-inner {
+  padding: 14px 18px 18px;
+  border-top: 1px dashed var(--line-strong);
+  margin: 2px 14px 0;
+}
+.why {
+  font-family: 'Fraunces', serif; font-size: 15px;
+  line-height: 1.5; color: var(--ink);
+  margin-bottom: 14px; font-weight: 400;
+}
+.card-detail { margin-top: 12px; }
+.card-detail-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: 5px; font-weight: 500;
+}
+.card.connect .card-detail-label { color: var(--olive); }
+.card.anchor .card-detail-label  { color: var(--tan); }
+.card.caution .card-detail-label { color: var(--brown-warn); }
+.card.vip .card-detail-label     { color: var(--ink); }
+.card-detail-text {
+  font-family: 'Fraunces', serif; font-size: 14px;
+  line-height: 1.5; color: var(--ink-soft); font-weight: 400;
+}
+.card-detail-text em { color: var(--rust); font-style: italic; }
+
+.linkedin-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 14px; padding: 9px 14px;
+  background: var(--ink); color: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; text-decoration: none;
+  border-radius: 3px; transition: opacity 0.2s ease;
+}
+.linkedin-btn:active { opacity: 0.7; }
+.linkedin-btn svg { width: 12px; height: 12px; }
+
+/* NARRATIVE */
+.narrative {
+  margin: 40px 0; padding: 24px 22px;
+  background: var(--paper-soft);
+  border-radius: 4px; border: 1px solid var(--line);
+  position: relative;
+}
+.narrative.dark {
+  background: var(--ink); color: var(--paper);
+  border-color: var(--ink);
+}
+.narrative.dark .section-title .label { color: var(--paper); }
+.narrative.dark .section-title .num { color: var(--sand); }
+.narrative.dark .section-title .rule { background: rgba(240, 232, 218, 0.2); }
+
+.narrative-body {
+  font-family: 'Fraunces', serif; font-size: 16px;
+  line-height: 1.55; color: var(--ink);
+}
+.narrative.dark .narrative-body { color: var(--paper); }
+.narrative-body p { margin-bottom: 12px; }
+.narrative-body p:last-child { margin-bottom: 0; }
+.narrative-body strong { font-weight: 600; color: var(--rust); }
+.narrative.dark .narrative-body strong { color: var(--sand); font-weight: 500; }
+
+.sub-h {
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-size: 20px; margin: 28px 0 12px;
+  color: var(--ink); font-weight: 400;
+}
+
+.bullet-list { list-style: none; margin: 8px 0; }
+.bullet-list li {
+  padding: 10px 0 10px 20px;
+  border-bottom: 1px dotted var(--line);
+  position: relative;
+  font-family: 'Fraunces', serif;
+  font-size: 15px; line-height: 1.5;
+}
+.bullet-list li:last-child { border-bottom: none; }
+.bullet-list li::before {
+  content: ""; position: absolute;
+  left: 0; top: 18px; width: 10px; height: 1px;
+  background: var(--rust);
+}
+.narrative.dark .bullet-list li { border-bottom-color: rgba(240, 232, 218, 0.15); }
+.narrative.dark .bullet-list li::before { background: var(--sand); }
+
+/* PITCH */
+.pitch {
+  margin: 20px 0; padding: 18px 20px;
+  background: var(--paper);
+  border-left: 3px solid var(--rust);
+  border-radius: 2px;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; font-size: 17px;
+  line-height: 1.5; color: var(--ink);
+}
+.pitch .quote-mark {
+  font-size: 38px; color: var(--rust);
+  line-height: 0; position: relative;
+  top: 14px; margin-right: 4px;
+}
+
+/* GLOSSARY */
+.glossary-group { margin-bottom: 22px; }
+.glossary-group:last-child { margin-bottom: 0; }
+.glossary-header {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.glossary-header::after {
+  content: ""; flex: 1; height: 1px; background: var(--line-strong);
+}
+.glossary-item { padding: 10px 0; border-bottom: 1px dotted var(--line); }
+.glossary-item:last-child { border-bottom: none; }
+.gloss-term {
+  font-family: 'Fraunces', serif; font-size: 15.5px;
+  font-weight: 500; color: var(--ink);
+  margin-bottom: 3px;
+  display: flex; align-items: baseline;
+  gap: 8px; flex-wrap: wrap;
+}
+.gloss-term .abbr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; color: var(--rust);
+  letter-spacing: 0.1em; font-weight: 500;
+}
+.gloss-def {
+  font-family: 'Fraunces', serif; font-size: 14px;
+  line-height: 1.5; color: var(--ink-soft); font-weight: 400;
+}
+
+/* PRIMER */
+.primer {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 18px 20px; margin: 18px 0;
+}
+.primer p {
+  font-family: 'Fraunces', serif; font-size: 14.5px;
+  line-height: 1.55; margin-bottom: 10px; color: var(--ink-soft);
+}
+.primer p:last-child { margin-bottom: 0; }
+.primer p strong { color: var(--ink); font-weight: 600; }
+
+/* QUESTIONS */
+.q-block {
+  margin-bottom: 16px;
+  padding-left: 14px;
+  border-left: 2px solid var(--olive);
+}
+.q-who {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--olive);
+  margin-bottom: 6px; font-weight: 500;
+}
+.q-list {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic; font-size: 15px;
+  line-height: 1.5; color: var(--ink);
+}
+.q-list p {
+  margin-bottom: 8px;
+  padding-left: 14px;
+  position: relative;
+}
+.q-list p:last-child { margin-bottom: 0; }
+.q-list p::before {
+  content: "\201C";
+  position: absolute; left: 0;
+  color: var(--rust); font-size: 20px;
+  line-height: 1; top: 0;
+}
+
+/* EDGE */
+.edge-card {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 16px 18px; margin-bottom: 10px;
+  position: relative;
+}
+.edge-num {
+  position: absolute; top: 12px; right: 14px;
+  font-family: 'Fraunces', serif;
+  font-size: 32px; font-style: italic;
+  color: var(--rust); opacity: 0.35;
+  line-height: 1; font-weight: 300;
+}
+.edge-title {
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 500;
+  color: var(--ink); margin-bottom: 6px;
+  padding-right: 40px;
+}
+.edge-desc {
+  font-family: 'Fraunces', serif;
+  font-size: 13.5px; line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* TIMELINE */
+.timeline {
+  margin-top: 16px; position: relative; padding-left: 22px;
+}
+.timeline::before {
+  content: ""; position: absolute;
+  left: 6px; top: 8px; bottom: 8px;
+  width: 1px; background: rgba(240, 232, 218, 0.25);
+}
+.narrative:not(.dark) .timeline::before { background: var(--line-strong); }
+.timeline-item { position: relative; padding-bottom: 16px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+  content: ""; position: absolute;
+  left: -22px; top: 6px;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--sand); border: 2px solid var(--ink);
+  box-shadow: 0 0 0 2px var(--sand);
+}
+.narrative:not(.dark) .timeline-item::before {
+  background: var(--paper); border-color: var(--rust);
+  box-shadow: 0 0 0 2px var(--paper);
+}
+.timeline-when {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--sand);
+  margin-bottom: 3px;
+}
+.narrative:not(.dark) .timeline-when { color: var(--rust); }
+.timeline-what {
+  font-family: 'Fraunces', serif; font-size: 14.5px; line-height: 1.45;
+}
+
+/* FLOURISH */
+.flourish {
+  display: flex; align-items: center; gap: 8px;
+  margin: 32px 0; justify-content: center;
+  color: var(--rust); opacity: 0.5;
+}
+.flourish::before, .flourish::after {
+  content: ""; height: 1px;
+  background: currentColor; flex: 0 0 40px;
+}
+.flourish-mark {
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 40px; padding: 28px 0 50px;
+  border-top: 1px solid var(--line-strong);
+  text-align: center;
+}
+.footer-mark {
+  font-family: 'Fraunces', serif; font-style: italic;
+  font-size: 16px; color: var(--ink-muted); margin-bottom: 4px;
+}
+.footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink-muted); opacity: 0.7;
+}
+
+@media (max-width: 380px) {
+  .title { font-size: 44px; }
+  .wrap { padding: 0 16px; }
+  .avatar { width: 42px; height: 42px; font-size: 14px; }
+  .card-name { font-size: 16px; }
+  .card-role { font-size: 12.5px; }
+  .narrative { padding: 20px 18px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Confidential · Event Brief</div>
+  <h1 class="title">In This <em>Together</em></h1>
+  <div class="meta">Fundraiser with Governor Andy Beshear &nbsp;·&nbsp; Commonwealth of Kentucky</div>
+  <div class="meta-row">
+    <span>Sun · Apr 19</span>
+    <span>1:00 PM ET</span>
+    <span>Washington, DC</span>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <div class="section-nav-inner">
+    <a href="#people">The Room</a>
+    <a href="#prep">Before Sunday</a>
+    <a href="#strategy">Strategy</a>
+    <a href="#pitch">Your Pitch</a>
+    <a href="#avoid">Avoid</a>
+    <a href="#followup">Follow-up</a>
+    <a href="#logistics">Logistics</a>
+  </div>
+</nav>
+
+<section id="people">
+  <div class="filters-wrap">
+    <div class="filters-label">Filter the room</div>
+    <div class="filters">
+      <button class="filter active" data-f="all">All <span class="count">16</span></button>
+      <button class="filter" data-f="priority">Top targets <span class="count">3</span></button>
+      <button class="filter" data-f="connect">Worth the convo <span class="count">5</span></button>
+      <button class="filter" data-f="anchor">Your team <span class="count">6</span></button>
+      <button class="filter" data-f="caution">Handle w/ care <span class="count">1</span></button>
+      <button class="filter" data-f="vip">Guest of honor <span class="count">1</span></button>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span class="num">I.</span>
+    <span class="label">The room</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="cards" id="cards"></div>
+</section>
+
+<div class="flourish"><span class="flourish-mark">§</span></div>
+
+<!-- BEFORE SUNDAY -->
+<section id="prep" class="narrative">
+  <div class="section-title">
+    <span class="num">II.</span>
+    <span class="label">Before Sunday</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <p>You're walking in with <strong>Ainsley, Sufian, and Dennis Cardoza</strong> — which means you don't have to manufacture credibility. Dennis is a top-ten DC healthcare lobbyist. Ainsley is the clinical-AI operator. Sufian owns the NEMT infrastructure play. Your job is to <em>be fluent enough</em> to follow any conversation they wander into, and <em>curious enough</em> that people want you in the next one.</p>
+    <p>What follows is the surface area.</p>
+
+    <h3 class="sub-h">Keywords you should recognize</h3>
+
+    <div class="glossary-group">
+      <div class="glossary-header">Healthcare AI</div>
+      <div class="glossary-item">
+        <div class="gloss-term">Ambient scribe</div>
+        <div class="gloss-def">AI that records doctor-patient visits and drafts the clinical note. Abridge, Nuance DAX, Suki are the names. KP's large deployment was led by Ainsley.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">SaMD <span class="abbr">Software as a Medical Device</span></div>
+        <div class="gloss-def">FDA's regulatory pathway for software that functions as a medical device. Matters for any clinical-decision AI that touches diagnosis or treatment.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Red Zone AI Agent™</div>
+        <div class="gloss-def">Ainsley's coined framework — the last 20 yards of AI deployment where strategy meets clinical workflow reality. Use this term when her thesis comes up.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">RAG <span class="abbr">Retrieval-Augmented Generation</span></div>
+        <div class="gloss-def">LLMs grounded in source docs rather than pure generation. The primary way healthcare AI reduces hallucination risk.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">PHI <span class="abbr">Protected Health Information</span></div>
+        <div class="gloss-def">The data HIPAA governs. The biggest friction point for healthcare AI training and deployment. Know this cold.</div>
+      </div>
+    </div>
+
+    <div class="glossary-group">
+      <div class="glossary-header">NEMT · Kinetik's World</div>
+      <div class="glossary-item">
+        <div class="gloss-term">NEMT <span class="abbr">Non-Emergency Medical Transportation</span></div>
+        <div class="gloss-def">Medicaid-covered rides to dialysis, doctor visits, pharmacy. Billions in federal spend. Kinetik sits in the data/payments layer.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Broker model</div>
+        <div class="gloss-def">Modivcare, MTM, Access2Care contract with state Medicaid plans (MCOs), then dispatch to transportation providers. Legacy model Kinetik modernizes.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">MCO <span class="abbr">Managed Care Organization</span></div>
+        <div class="gloss-def">The private insurer running a state's Medicaid plan. Anthem, Humana, Centene, Molina. They're who Kinetik ultimately serves.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Tier rates</div>
+        <div class="gloss-def">Payment tiers by ride type: ambulatory → wheelchair van (WAV) → stretcher. Each tier has different unit economics. WAV is where the margin math gets interesting.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Fraud enforcement</div>
+        <div class="gloss-def">Live issue. Fabricated or overbilled trips. 2024–25 saw ramped-up state and federal enforcement, which reshaped the competitive landscape.</div>
+      </div>
+    </div>
+
+    <div class="glossary-group">
+      <div class="glossary-header">Policy · Rural Health</div>
+      <div class="glossary-item">
+        <div class="gloss-term">1115 waiver</div>
+        <div class="gloss-def">A state's permission slip from CMS to experiment with Medicaid rules. Every big state reform uses one.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">340B</div>
+        <div class="gloss-def">Federal program forcing drug-maker discounts for safety-net hospitals. Politically charged; rural hospitals depend on it.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">REH <span class="abbr">Rural Emergency Hospital</span></div>
+        <div class="gloss-def">2023 CMS designation — a small hospital keeps its ER and outpatient, sheds inpatient, gets enhanced Medicare reimbursement. A real option for some of Beshear's 35.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">CAH <span class="abbr">Critical Access Hospital</span></div>
+        <div class="gloss-def">Rural hospital with under 25 beds, reimbursed on a cost-plus basis by Medicare. The traditional rural survival mechanism.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Medicaid unwinding</div>
+        <div class="gloss-def">The post-COVID redetermination wave that kicked millions off Medicaid rolls in 2023–24. Still reverberating in MCO enrollment.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">CMMI</div>
+        <div class="gloss-def">Center for Medicare &amp; Medicaid Innovation. Runs value-based care pilots. Where most "new model" experimentation lives.</div>
+      </div>
+    </div>
+
+    <div class="glossary-group">
+      <div class="glossary-header">Political · Who Runs What</div>
+      <div class="glossary-item">
+        <div class="gloss-term">ITT <span class="abbr">In This Together PAC</span></div>
+        <div class="gloss-def">Beshear's leadership PAC. Raised $4.3M in 2025. Super PAC + 501(c)(4) combo. Widely read as presidential prep.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">DGA <span class="abbr">Democratic Governors Association</span></div>
+        <div class="gloss-def">The party's governor-recruitment and support org. Beshear is 2026 chair — a platform-maker for the national stage.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Eric Hyers</div>
+        <div class="gloss-def">Beshear's longtime strategist. Ran both gubernatorial campaigns and runs ITT now. Not on the host committee, but the name to know if it comes up.</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">The 2028 field</div>
+        <div class="gloss-def">Beshear, Newsom (CA), Shapiro (PA), Pritzker (IL), Whitmer (MI), Klobuchar (MN) — names most mentioned. Beshear's lane is "red-state moderate who wins."</div>
+      </div>
+      <div class="glossary-item">
+        <div class="gloss-term">Public affairs ≠ lobbying</div>
+        <div class="gloss-def">Lobbying directly asks lawmakers for outcomes. Public affairs builds the coalitions and narratives that make those asks land. Baldick's HPS and Ainsley Health both live in public affairs.</div>
+      </div>
+    </div>
+
+    <h3 class="sub-h">Beshear in 90 seconds</h3>
+    <div class="primer">
+      <p><strong>The man.</strong> Andy Beshear, 48. Son of former KY Gov. Steve Beshear. Former KY Attorney General. Won governor 2019 by 0.4%, reelected 2023 by 5% against Trump-endorsed Daniel Cameron in a state Trump won by 26.</p>
+      <p><strong>The brand.</strong> Red-state Democrat. Faith-forward. Crisis-tested (2021 tornadoes, 2022 floods, COVID). Signed Medicaid expansion protections. Blocked school choice legislation. Restored voting rights to 180k Kentuckians with nonviolent felonies.</p>
+      <p><strong>The play.</strong> 2028 is the subtext of every Beshear event right now. ITT PAC is the fundraising shell. DGA chairmanship is the national stage. His through-line is "empathy + competence" — positioning as the anti-chaos candidate.</p>
+      <p><strong>The policy drumbeat.</strong> Rural healthcare — 35 KY hospitals at risk of closure, which he blames on tariffs and federal cuts. This is the live wire in the room.</p>
+    </div>
+
+    <h3 class="sub-h">Questions to ask</h3>
+
+    <div class="q-block">
+      <div class="q-who">If you get Beshear for 30 seconds</div>
+      <div class="q-list">
+        <p>Governor, thank you for the focus on rural hospitals — what's the one federal policy change that would matter most?</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-who">For Baldick (public affairs)</div>
+      <div class="q-list">
+        <p>How has the playbook for healthcare issue campaigns changed since the 2010 ACA fight?</p>
+        <p>Where do creators and content platforms fit into modern coalition strategy?</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-who">For O'Keefe (capital × politics)</div>
+      <div class="q-list">
+        <p>How does Paladin think about regulatory risk when evaluating healthcare infrastructure bets?</p>
+        <p>What's changed in how Dem donors build long-term relationships with candidates?</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-who">For Bhatraju (peer founder)</div>
+      <div class="q-list">
+        <p>When you were scaling Arcadia, did you see policy as a moat or a drag?</p>
+        <p>What's your read on building data infrastructure in regulated industries right now?</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-who">For Sparapani (AI policy)</div>
+      <div class="q-list">
+        <p>Is state-level AI regulation going to preempt federal, or set the template?</p>
+        <p>How do you see HIPAA evolving to handle AI training data specifically?</p>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-who">For Cauley (KY politics)</div>
+      <div class="q-list">
+        <p>What are you seeing in Eastern KY on healthcare access that isn't in the national conversation?</p>
+      </div>
+    </div>
+
+    <h3 class="sub-h">Three things you can actually teach</h3>
+    <p style="font-size: 14.5px; color: var(--ink-muted); font-style: italic; margin-bottom: 16px;">You're not only learning. You also have niches. Know them so you can bring something when the moment comes.</p>
+
+    <div class="edge-card">
+      <div class="edge-num">01</div>
+      <div class="edge-title">NEMT economics &amp; fraud enforcement</div>
+      <div class="edge-desc">You've been studying wheelchair van tier pricing, MCO contracting, and the 2024–25 enforcement wave. Most lobbyists and operators in this room don't know the unit economics. Carry this as your expertise token.</div>
+    </div>
+    <div class="edge-card">
+      <div class="edge-num">02</div>
+      <div class="edge-title">State-level healthcare AI pilots</div>
+      <div class="edge-desc">Idaho's AI literacy legislation. Utah's rural prescription-renewal pilot. You fact-checked both. You know the regulatory nuance. Bring these up specifically with Sparapani, Cardoza, or any state-policy conversation.</div>
+    </div>
+    <div class="edge-card">
+      <div class="edge-num">03</div>
+      <div class="edge-title">Credibility-as-distribution in healthcare</div>
+      <div class="edge-desc">The Ainsley Health thesis: Dr. MacLean's KP track record is the asset; the podcast + newsletter + GTM layer is the distribution mechanism. People find the frame genuinely interesting — use it when someone asks what Ainsley actually does.</div>
+    </div>
+  </div>
+</section>
+
+<div class="flourish"><span class="flourish-mark">§</span></div>
+
+<section id="strategy" class="narrative dark">
+  <div class="section-title">
+    <span class="num">III.</span>
+    <span class="label">Strategic framing</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <p>This is a <strong>Beshear-for-2028 positioning event</strong>. His PAC raised $4.3M in 2025 and everyone in the room knows what that means.</p>
+    <p>You're arriving with <strong>Ainsley, Sufian, and Dennis Cardoza</strong> — clinical AI operator, NEMT infrastructure CEO, and top DC healthcare lobbyist. That's not a BDR walking in cold. That's a real team with real credibility.</p>
+    <p>The opening is that <strong>Beshear's loudest policy drumbeat is rural healthcare access</strong> — the 35 KY hospitals at risk. That lands on the exact intersection your team occupies. Use it.</p>
+  </div>
+</section>
+
+<section id="pitch" class="narrative">
+  <div class="section-title">
+    <span class="num">IV.</span>
+    <span class="label">Your pitch, tight</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <div class="pitch">
+      <span class="quote-mark">"</span>We help health systems and investors figure out what's real in healthcare AI versus what's hype. Dr. MacLean led AI deployment at Kaiser's Mid-Atlantic region — we package that perspective through a podcast, a newsletter, and advisory work.<span class="quote-mark">"</span>
+    </div>
+    <p style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 15px; color: var(--ink-muted); margin-top: 14px;">Humble frame when you need it:</p>
+    <div class="pitch" style="border-left-color: var(--olive); font-size: 15px;">
+      <span class="quote-mark" style="color: var(--olive);">"</span>I came out of a sales background and I'm relatively new to healthcare — been going deep on NEMT economics and doing the Stanford AI in Healthcare cert.<span class="quote-mark" style="color: var(--olive);">"</span>
+    </div>
+  </div>
+</section>
+
+<section id="avoid" class="narrative">
+  <div class="section-title">
+    <span class="num">V.</span>
+    <span class="label">Do not do this</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <ul class="bullet-list">
+      <li>Don't pitch Beshear or his staff on anything. Not that event.</li>
+      <li>Don't raise ARC, addiction treatment reimbursement, or the FBI investigation with <em>anyone</em>. That topic is radioactive.</li>
+      <li>Don't hand out cards aggressively. 4–6 good conversations beats 15 shallow ones.</li>
+      <li>Don't oversell your role. <em>"I work closely with Dr. MacLean on GTM and content"</em> is cleaner than overstating the stake.</li>
+      <li>Don't fake healthcare SME. Stated learning curves earn respect. Performed expertise doesn't.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="followup" class="narrative dark">
+  <div class="section-title">
+    <span class="num">VI.</span>
+    <span class="label">Follow-up</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-when">Sunday night</div>
+        <div class="timeline-what">LinkedIn request with one specific sentence to every person you actually spoke with. Specificity &gt; volume.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Within 24 hours</div>
+        <div class="timeline-what">Email Jesse McKnight a genuine thank-you. He's your door opener for the next one of these.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Within 3 days</div>
+        <div class="timeline-what">Ask Baldick and one other top target for a 20-minute coffee in DC. Be specific about what you want to discuss.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-when">Monday AM</div>
+        <div class="timeline-what">Debrief with Ainsley, Sufian, and Dennis. Who did they talk to, what should you push on, what did you miss.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="logistics" class="narrative">
+  <div class="section-title">
+    <span class="num">VII.</span>
+    <span class="label">Logistics</span>
+    <span class="rule"></span>
+  </div>
+  <div class="narrative-body">
+    <ul class="bullet-list">
+      <li><strong>Dress</strong> — Navy blazer, open collar, no tie. Sunday afternoon DC PAC event. Not black tie.</li>
+      <li><strong>Arrive</strong> — 1:10–1:15 PM. Not first, not last. Arrive with your team.</li>
+      <li><strong>Contribute</strong> — Any amount in the invite's range works. Donate before you walk in.</li>
+      <li><strong>Prep tonight</strong> — Tap through the LinkedIn links in each card so faces register.</li>
+      <li><strong>Exit</strong> — Don't stay past 3:30. Leave something on the table.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-mark">Good hunting.</div>
+  <div class="footer-meta">Prepared Apr 17, 2026 · For JM</div>
+</footer>
+
+</div>
+
+<script>
+const PEOPLE = [
+  {
+    id: "beshear", cat: "vip", tag: "Honoree", initials: "AB",
+    name: "Gov. Andy Beshear",
+    role: "Governor of Kentucky · DGA chair · 2028 presidential speculation",
+    why: "The guest of honor, not the target. Observe, don't pitch.",
+    detail: "Rural healthcare is his loudest talking point right now — 35 Kentucky rural hospitals at risk. That drumbeat is your natural bridge to Kinetik and Ainsley Health work. Listen for where Beshear pivots in his remarks — that tells you which donors he's speaking to.",
+    linkedin: "https://www.linkedin.com/company/andy-beshear-for-governor/"
+  },
+  {
+    id: "baldick", cat: "priority", tag: "#1 Target", initials: "NB",
+    name: "Nick Baldick",
+    role: "Founder, Hilltop Public Solutions · Dem public affairs heavyweight · Chevy Chase",
+    why: "The single most important person in the room for you. HPS ran the largest healthcare reform issue campaign in history (2010 ACA, 20+ states).",
+    detail: "The distribution-layer thesis you work from — MacLean's credibility as the asset, content and coalition as delivery — is literally the Hilltop playbook. He lives in Chevy Chase; you're in Gaithersburg. That's a natural coffee ask. <em>Goal: ask for a 20-min DC coffee within 2 weeks. Open with the 2010 ACA coalition question.</em>",
+    linkedin: "#"
+  },
+  {
+    id: "okeefe", cat: "priority", tag: "#2 Target", initials: "PO",
+    name: "Peter O'Keefe",
+    role: "Venture Partner, Paladin Capital · 5x DGA Treasurer (record) · Clinton WH alum",
+    why: "Quiet heavyweight. Financial services + VC + deepest Dem donor network in the room. Directly relevant to Ainsley Capital.",
+    detail: "Raised $250M for DGA in 2018. Longtime Terry McAuliffe ally. At Paladin, advises portfolio on regulatory risk. Ask about Paladin's thesis on healthcare infrastructure and how he thinks about political risk in PE portfolios. <em>Goal: be on his radar. Don't push on Sunday — that's a long game.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Peter%20O%27Keefe%20Paladin%20Capital"
+  },
+  {
+    id: "bhatraju", cat: "priority", tag: "#3 Peer", initials: "KB",
+    name: "Kiran Bhatraju",
+    role: "Founder/CEO, Arcadia ($1.5B clean-energy data) · Pikeville KY roots · worked for Rep. Yarmuth",
+    why: "Not a BDR target. A peer relationship you want to have for 10 years.",
+    detail: "Scaled a content-and-data platform out of DC with deep KY roots — same axis you operate on. Ask how he thinks about public-sector sales cycles and whether policy can be a GTM moat for data platforms. His Arcadia ↔ utility data model is analogous to Ainsley's healthcare work. <em>Goal: mutual connection, not a pitch.</em>",
+    linkedin: "https://www.linkedin.com/in/kiran-bhatraju/"
+  },
+  {
+    id: "sparapani", cat: "connect", tag: "AI Policy", initials: "TS",
+    name: "Tim Sparapani",
+    role: "Founder, SPQR Strategies · First Dir. of Public Policy at Facebook · Former ACLU senior counsel",
+    why: "Exceptionally high signal for healthcare AI and data privacy conversations.",
+    detail: "This is who you raise the Idaho AI literacy legislation and Utah rural prescription AI pilot with. He'll engage. Ask how state-level AI policy is reshaping federal healthcare data rules, and how privacy constraints will bite AI deployment in the next 18 months. <em>Goal: build a lightweight policy advisor relationship.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Tim%20Sparapani%20SPQR"
+  },
+  {
+    id: "cauley", cat: "connect", tag: "KY Machine", initials: "JC",
+    name: "Jim Cauley",
+    role: "KY political consultant · Ran Obama's 2004 Senate campaign · Managed Steve Beshear gubernatorial · Former chief of staff",
+    why: "He <em>is</em> the Beshear political operation. Rural Kentucky expert.",
+    detail: "Nobody in the room knows rural KY politics better. If you can talk credibly about NEMT and rural hospital closures for 90 seconds, he'll remember you. Ask what he's seeing on the ground in Eastern KY. <em>Goal: be the person he thinks of when someone asks, 'who understands the healthcare AI side?'</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Jim%20Cauley%20Kentucky"
+  },
+  {
+    id: "ward", cat: "connect", tag: "KY Door", initials: "MW",
+    name: "Mike Ward",
+    role: "Former KY-03 Congressman (1995-97) · Senior advisor to Louisville Mayor Greenberg · Medical cannabis advocate",
+    why: "Louisville/KY connection point. Warm personality. Low-pressure conversation.",
+    detail: "Peace Corps alum. One of the easier conversations in the room. Ask about Louisville's healthcare economy and what's working in Kentucky on rural access. <em>Goal: friendly first touch. Maybe relevant later for state-level KY work.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Mike%20Ward%20Louisville%20Kentucky"
+  },
+  {
+    id: "emartinez", cat: "connect", tag: "Warm Intro", initials: "EB",
+    name: "Elizabeth Martinez Baldick",
+    role: "Nick Baldick's wife",
+    why: "Often the warmest entry point to Nick.",
+    detail: "Don't transactional-network the spouse. Be a real person. If she asks what you do, be honest and short. If there's genuine chemistry, she may bring you into Nick's orbit organically. <em>Goal: be memorable as a person, not as a transaction.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Elizabeth%20Martinez%20Baldick"
+  },
+  {
+    id: "armbrust", cat: "connect", tag: "Just Talk", initials: "SA",
+    name: "Shawn Armbrust",
+    role: "Executive Director, Mid-Atlantic Innocence Project · Tim Sparapani's partner",
+    why: "Not a work target — criminal justice work is interesting and she's accomplished.",
+    detail: "MAIP has helped exonerate 40+ wrongfully convicted people since 2000. Don't sell her on anything. Ask about the work. Being a human, not a prospector, is what makes these rooms work for you over time.",
+    linkedin: "https://www.linkedin.com/in/shawnarmbrust/"
+  },
+  {
+    id: "maclean", cat: "anchor", tag: "Your Team", initials: "AM",
+    name: "Dr. Ainsley MacLean",
+    role: "Founder, Ainsley Advisory Group · Former CAIO & CMIO, Kaiser Permanente Mid-Atlantic · Harvard-trained",
+    why: "Your anchor. You're arriving together. Let her set the tone.",
+    detail: "Your role on Sunday is to make her look good and introduce people to her. Don't compete for airtime in her conversations. Be the person who brings her the right intros. <em>Bring her a conversation: 'Nick Baldick wants to say hello.'</em>",
+    linkedin: "https://www.linkedin.com/in/ainsley-maclean/"
+  },
+  {
+    id: "cardoza", cat: "anchor", tag: "Your Team", initials: "DC",
+    name: "Dennis Cardoza",
+    role: "Foley & Lardner federal public affairs · Fmr. CA-18 Congressman (5 terms) · Top DC healthcare lobbyist",
+    why: "On your team Sunday. This is a massive credibility multiplier for you.",
+    detail: "You're walking in with a top-ten DC healthcare lobbyist. Use him. Let him make the intros he wants to make. Watch how he navigates the room — this is an unpaid masterclass. <em>Goal post-event: debrief Monday on what he saw. He'll have read the room at a level you can't yet.</em>",
+    linkedin: "https://www.linkedin.com/in/dennis-cardoza-1ab6173b/"
+  },
+  {
+    id: "sufian", cat: "anchor", tag: "Your Team", initials: "SC",
+    name: "Sufian Chowdhury",
+    role: "CEO, Kinetik · Your partner on the Ainsley Capital PE play",
+    why: "Your wingman. Use him.",
+    detail: "You already know him. He can warm-intro you to anyone he's met. Tell him beforehand who your top 3 targets are so he's watching for chances to tee them up. Between him and Dennis, you have two excellent connectors on your side.",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Sufian%20Chowdhury%20Kinetik"
+  },
+  {
+    id: "wollman", cat: "anchor", tag: "Home Team", initials: "BW",
+    name: "Dr. Bruce Wollman",
+    role: "Associate Medical Director, Kaiser Permanente",
+    why: "KP physician leadership. Strong clinical perspective on healthcare policy.",
+    detail: "Panels on US healthcare outcomes and population health. Solid clinical perspective. Short, warm interaction is plenty. Don't pitch.",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Bruce%20Wollman%20Kaiser%20Permanente"
+  },
+  {
+    id: "mcknight", cat: "anchor", tag: "Say Thanks", initials: "JM",
+    name: "Jesse McKnight",
+    role: "Host / convener / RSVP contact",
+    why: "The door. Don't forget to open it properly.",
+    detail: "Warm thank-you in person Sunday, genuine email within 24 hours. He's the person who invites you to the next one. <em>Small detail, big leverage.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Jesse%20McKnight"
+  },
+  {
+    id: "may", cat: "caution", tag: "Careful", initials: "GM",
+    name: "Greg May",
+    role: "Pikeville KY businessman · President, Riverview Assistance Corp · ARC-associated addiction treatment",
+    why: "Be polite. Say nothing substantive about healthcare, Medicaid, or addiction treatment.",
+    detail: "ARC is under an active FBI investigation for Medicaid healthcare fraud. Any association between Ainsley Health's healthcare credibility work and ARC is a liability you do not want. Don't bring it up. If he raises healthcare topics, redirect to KY economic development or weather. <em>Goal: pleasant two-minute conversation, then move on.</em>",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Greg%20May%20Pikeville%20Kentucky"
+  },
+  {
+    id: "johnson", cat: "connect", tag: "Unknown", initials: "MJ",
+    name: "Michael Johnson",
+    role: "Unclear — too common a name to ID pre-event",
+    why: "Introduce yourself and ask what he does. Don't assume.",
+    detail: "Could be anyone. Treat him as potentially important until you know he isn't. Good short-form question: <em>'How do you know the Governor?'</em> — that unlocks most of what you need to calibrate.",
+    linkedin: "https://www.linkedin.com/search/results/people/?keywords=Michael%20Johnson%20Beshear%20Kentucky"
+  }
+];
+
+const cardsEl = document.getElementById("cards");
+const chevronSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>`;
+const linkedInSvg = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>`;
+
+function render() {
+  cardsEl.innerHTML = PEOPLE.map(p => `
+    <article class="card ${p.cat}" data-cat="${p.cat}" data-id="${p.id}">
+      <div class="card-head">
+        <div class="avatar">${p.initials}</div>
+        <div class="card-main">
+          <div class="card-name">${p.name}</div>
+          <div class="card-role">${p.role}</div>
+        </div>
+        <div class="card-right">
+          <span class="card-tag">${p.tag}</span>
+          <span class="card-chevron">${chevronSvg}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="why">${p.why}</div>
+          <div class="card-detail">
+            <div class="card-detail-label">How to play it</div>
+            <div class="card-detail-text">${p.detail}</div>
+          </div>
+          <a class="linkedin-btn" href="${p.linkedin}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            ${linkedInSvg}
+            <span>Find on LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  document.querySelectorAll(".card-head").forEach(h => {
+    h.addEventListener("click", () => {
+      h.parentElement.classList.toggle("open");
+    });
+  });
+}
+
+document.querySelectorAll(".filter").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(f => f.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.f;
+    document.querySelectorAll(".card").forEach(c => {
+      if (f === "all" || c.dataset.cat === f) c.classList.remove("hidden");
+      else c.classList.add("hidden");
+    });
+  });
+});
+
+render();
+
+setTimeout(() => {
+  const first = document.querySelector(".card.priority");
+  if (first) first.classList.add("open");
+}, 400);
+</script>
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Agent Command Center</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f5f5f7;
+    --text-secondary: rgba(255,255,255,0.5);
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --amber: #fbbf24;
+    --radius: 16px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Ambient background glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(129,140,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 20s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 25s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes ambientDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 3%) scale(1.1); }
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    padding: 40px 0 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) forwards;
+  }
+
+  .header-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--emerald);
+    margin-bottom: 20px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--emerald);
+    animation: pulse 2s ease-in-out infinite;
+    position: relative;
+  }
+  .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: var(--emerald);
+    opacity: 0;
+    animation: pulseRing 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.85); }
+  }
+  @keyframes pulseRing {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .header h1 {
+    font-size: clamp(32px, 7vw, 56px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 30%, #f5f5f7 60%, #818cf8 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    line-height: 1.1;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .header-time {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- GLASS CARD ---- */
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.35s var(--ease-smooth);
+  }
+  .glass:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  /* ---- STATS BAR ---- */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.15s forwards;
+  }
+  @media (max-width: 600px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .stat-card {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent, var(--indigo)), transparent);
+    opacity: 0.5;
+  }
+  .stat-value {
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ---- AGENT CARDS GRID ---- */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 900px) {
+    .agents-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .agents-grid { grid-template-columns: 1fr; }
+  }
+
+  .agent-card {
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .agent-card.visible {
+    animation: cardSlideUp 0.7s var(--ease-spring) forwards;
+  }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.8;
+  }
+
+  .agent-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: radial-gradient(circle at 20% 20%, var(--accent), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .agent-card:hover::after { opacity: 0.04; }
+  .agent-card:hover {
+    box-shadow: 0 0 40px -10px var(--accent);
+  }
+
+  .agent-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .agent-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .agent-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .agent-info .role {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .agent-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .agent-status .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .agent-status span {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .agent-task {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    min-height: 40px;
+  }
+
+  .agent-metric {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .agent-metric .count {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .agent-metric .label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  /* ---- BOTTOM GRID ---- */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ---- ACTIVITY FEED ---- */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .activity-card {
+    padding: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.5s forwards;
+  }
+
+  .activity-list {
+    list-style: none;
+  }
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  .activity-item.visible {
+    animation: slideRight 0.5s var(--ease-smooth) forwards;
+  }
+  .activity-item:last-child { border-bottom: none; }
+
+  .activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .activity-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .activity-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- SYSTEM HEALTH ---- */
+  .health-card {
+    padding: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.6s forwards;
+  }
+
+  .health-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .health-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 10px;
+    transition: background 0.2s;
+  }
+  .health-item:hover {
+    background: rgba(255,255,255,0.03);
+  }
+  .health-name {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .health-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--emerald);
+  }
+  .health-status .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--emerald);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cardSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ---- SCROLLBAR ---- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  /* ---- SUBTLE GRID PATTERN ---- */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Touch target minimum */
+  @media (pointer: coarse) {
+    .agent-card { min-height: 180px; }
+    .health-item { min-height: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="http://100.79.115.56:7700" target="_blank" style="display:inline-block;padding:6px 16px;border-radius:20px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:var(--indigo);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;transition:all 0.3s">Open Pixel Agents</a>
+    <div class="header-status">
+      <div class="status-dot"></div>
+      All Systems Operational
+    </div>
+    <h1>COMMAND CENTER</h1>
+    <div class="header-time" id="liveTime"></div>
+  </header>
+
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="glass stat-card" style="--accent: var(--indigo)">
+      <div class="stat-value" data-target="12" data-suffix="">0</div>
+      <div class="stat-label">Reports Generated</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--violet)">
+      <div class="stat-value" data-target="487" data-suffix="">0</div>
+      <div class="stat-label">Messages Processed</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--emerald)">
+      <div class="stat-value" data-target="10" data-suffix="">0</div>
+      <div class="stat-label">Trades Placed</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--amber)">
+      <div class="stat-value" id="uptimeValue">0d 0h</div>
+      <div class="stat-label">Uptime</div>
+    </div>
+  </section>
+
+  <!-- AGENT CARDS -->
+  <section class="agents-grid">
+
+    <div class="glass agent-card" style="--accent: var(--indigo)">
+      <div class="agent-header">
+        <div class="agent-avatar" style="background: linear-gradient(135deg, #6366f1, #818cf8)">J</div>
+        <div class="agent-info">
+          <h3>Jeremy</h3>
+          <div class="role">Chief of AI</div>
+        </div>
+      </div>
+      <div class="agent-status">
+        <div class="dot" style="background: var(--emerald)"></div>
+        <span style="color: var(--emerald)">Active</span>
+      </div>
+      <div class="agent-task">Orchestrating agent pipeline, routing Telegram messages...</div>
+      <div class="agent-metric">
+        <span class="count" data-target="1248">0</span>
+        <span class="label">msgs handled</span>
+      </div>
+    </div>
+
+    <div class="glass agent-card" style="--accent: var(--violet)">
+      <div class="agent-header">
+        <div class="agent-avatar" style="background: linear-gradient(135deg, #7c3aed, #a78bfa)">A</div>
+        <div class="agent-info">
+          <h3>Aaliyah</h3>
+          <div class="role">CTO</div>
+        </div>
+      </div>
+      <div class="agent-status">
+        <div class="dot" style="background: var(--emerald)"></div>
+        <span style="color: var(--emerald)">Active</span>
+      </div>
+      <div class="agent-task">Building Agent Command Center dashboard...</div>
+      <div class="agent-metric">
+        <span class="count" data-target="89">0</span>
+        <span class="label">builds shipped</span>
+      </div>
+    </div>
+
+    <div class="glass agent-card" style="--accent: var(--emerald)">
+      <div class="agent-header">
+        <div class="agent-avatar" style="background: linear-gradient(135deg, #059669, #34d399)">N</div>
+        <div class="agent-info">
+          <h3>Natalie</h3>
+          <div class="role">CRO</div>
+        </div>
+      </div>
+      <div class="agent-status">
+        <div class="dot" style="background: var(--emerald)"></div>
+        <span style="color: var(--emerald)">Active</span>
+      </div>
+      <div class="agent-task">Generating SA Brief for SFL 5-Pager...</div>
+      <div class="agent-metric">
+        <span class="count" data-target="34">0</span>
+        <span class="label">reports built</span>
+      </div>
+    </div>
+
+    <div class="glass agent-card" style="--accent: var(--rose)">
+      <div class="agent-header">
+        <div class="agent-avatar" style="background: linear-gradient(135deg, #e11d48, #fb7185)">M</div>
+        <div class="agent-info">
+          <h3>Melody</h3>
+          <div class="role">CMO</div>
+        </div>
+      </div>
+      <div class="agent-status">
+        <div class="dot" style="background: var(--amber)"></div>
+        <span style="color: var(--amber)">Idle</span>
+      </div>
+      <div class="agent-task">Awaiting next content brief from James...</div>
+      <div class="agent-metric">
+        <span class="count" data-target="22">0</span>
+        <span class="label">posts drafted</span>
+      </div>
+    </div>
+
+    <div class="glass agent-card" style="--accent: var(--amber)">
+      <div class="agent-header">
+        <div class="agent-avatar" style="background: linear-gradient(135deg, #d97706, #fbbf24)">R</div>
+        <div class="agent-info">
+          <h3>Rich</h3>
+          <div class="role">CFO</div>
+        </div>
+      </div>
+      <div class="agent-status">
+        <div class="dot" style="background: var(--emerald)"></div>
+        <span style="color: var(--emerald)">Active</span>
+      </div>
+      <div class="agent-task">Running cost analysis on CompetitorIQ infra...</div>
+      <div class="agent-metric">
+        <span class="count" data-target="7">0</span>
+        <span class="label">models built</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BOTTOM: Activity + Health -->
+  <section class="bottom-grid">
+
+    <div class="glass activity-card">
+      <div class="section-title">Recent Activity</div>
+      <ul class="activity-list">
+        <li class="activity-item" data-delay="0">
+          <div class="activity-dot" style="background: var(--emerald)"></div>
+          <div>
+            <div class="activity-text">Generated SA-Brief-SFL-5Pager.pdf</div>
+            <div class="activity-time">2h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="1">
+          <div class="activity-dot" style="background: var(--violet)"></div>
+          <div>
+            <div class="activity-text">Poly bot placed trade: Elon tweets before Monday</div>
+            <div class="activity-time">4h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="2">
+          <div class="activity-dot" style="background: var(--indigo)"></div>
+          <div>
+            <div class="activity-text">Fixed Pixel Agents rendering pipeline</div>
+            <div class="activity-time">5h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="3">
+          <div class="activity-dot" style="background: var(--rose)"></div>
+          <div>
+            <div class="activity-text">Drafted LinkedIn post for State Affairs launch</div>
+            <div class="activity-time">6h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="4">
+          <div class="activity-dot" style="background: var(--amber)"></div>
+          <div>
+            <div class="activity-text">CompetitorIQ cost model updated -- $42/mo projected</div>
+            <div class="activity-time">8h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="5">
+          <div class="activity-dot" style="background: var(--indigo)"></div>
+          <div>
+            <div class="activity-text">Telegram bot reconnected after idle timeout</div>
+            <div class="activity-time">12h ago</div>
+          </div>
+        </li>
+        <li class="activity-item" data-delay="6">
+          <div class="activity-dot" style="background: var(--emerald)"></div>
+          <div>
+            <div class="activity-text">Overnight autonomous session completed (7h)</div>
+            <div class="activity-time">14h ago</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="glass health-card">
+      <div class="section-title">System Health</div>
+      <ul class="health-list">
+        <li class="health-item">
+          <span class="health-name">Telegram Bot</span>
+          <span class="health-status"><span class="dot"></span> Online</span>
+        </li>
+        <li class="health-item">
+          <span class="health-name">Poly Bot</span>
+          <span class="health-status"><span class="dot"></span> Running</span>
+        </li>
+        <li class="health-item">
+          <span class="health-name">Arb Bot</span>
+          <span class="health-status"><span class="dot"></span> Running</span>
+        </li>
+        <li class="health-item">
+          <span class="health-name">Pixel Agents</span>
+          <span class="health-status"><span class="dot"></span> Active</span>
+        </li>
+        <li class="health-item">
+          <span class="health-name">Command Center</span>
+          <span class="health-status"><span class="dot"></span> Live</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="section-title" style="margin-top:32px">Explore</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+      <a href="timeline.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);transition:all 0.3s var(--ease-smooth);" onmouseover="this.style.borderColor='var(--indigo)';this.style.background='var(--surface-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="font-weight:600;margin-bottom:4px">Day in the Life</div>
+        <div style="font-size:13px;color:var(--text-secondary)">17 hours of autonomous AI operations</div>
+      </a>
+      <a href="portfolio.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);transition:all 0.3s var(--ease-smooth);" onmouseover="this.style.borderColor='var(--violet)';this.style.background='var(--surface-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="font-weight:600;margin-bottom:4px">Portfolio</div>
+        <div style="font-size:13px;color:var(--text-secondary)">12 deliverables shipped this week</div>
+      </a>
+      <a href="http://100.79.115.56:7700" target="_blank" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);transition:all 0.3s var(--ease-smooth);" onmouseover="this.style.borderColor='var(--emerald)';this.style.background='var(--surface-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="font-weight:600;margin-bottom:4px">Pixel Agents</div>
+        <div style="font-size:13px;color:var(--text-secondary)">VS Code pixel art office visualization</div>
+      </a>
+      <a href="demo.html" style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);transition:all 0.3s var(--ease-smooth);" onmouseover="this.style.borderColor='var(--rose)';this.style.background='var(--surface-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--surface)'">
+        <div style="font-weight:600;margin-bottom:4px">Intelligence Demo</div>
+        <div style="font-size:13px;color:var(--text-secondary)">Interactive CompetitorIQ report generator</div>
+      </a>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ---- LIVE CLOCK ----
+  function updateClock() {
+    const now = new Date();
+    const opts = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+                   hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    document.getElementById('liveTime').textContent = now.toLocaleString('en-US', opts);
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ---- UPTIME COUNTER ----
+  const uptimeStart = new Date('2026-04-10T00:00:00');
+  function updateUptime() {
+    const diff = Date.now() - uptimeStart.getTime();
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    document.getElementById('uptimeValue').textContent = days + 'd ' + hours + 'h ' + mins + 'm';
+  }
+  updateUptime();
+  setInterval(updateUptime, 60000);
+
+  // ---- COUNT-UP ANIMATION ----
+  function animateCount(el, target, duration) {
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Stats counters
+  document.querySelectorAll('.stat-value[data-target]').forEach(function(el) {
+    const target = parseInt(el.getAttribute('data-target'));
+    if (!isNaN(target)) {
+      setTimeout(function() { animateCount(el, target, 2000); }, 400);
+    }
+  });
+
+  // Agent metric counters
+  document.querySelectorAll('.agent-metric .count[data-target]').forEach(function(el) {
+    const target = parseInt(el.getAttribute('data-target'));
+    if (!isNaN(target)) {
+      setTimeout(function() { animateCount(el, target, 1800); }, 800);
+    }
+  });
+
+  // ---- STAGGERED CARD ENTRANCE ----
+  const cards = document.querySelectorAll('.agent-card');
+  cards.forEach(function(card, i) {
+    setTimeout(function() {
+      card.style.animationDelay = '0s';
+      card.classList.add('visible');
+    }, 200 + i * 120);
+  });
+
+  // ---- STAGGERED ACTIVITY ITEMS ----
+  const items = document.querySelectorAll('.activity-item');
+  items.forEach(function(item, i) {
+    setTimeout(function() {
+      item.classList.add('visible');
+    }, 700 + i * 100);
+  });
+
+  // ---- PARALLAX ON SCROLL ----
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        const scrollY = window.scrollY;
+        const header = document.querySelector('.header');
+        if (header) {
+          header.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+          header.style.opacity = Math.max(0, 1 - scrollY / 400);
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

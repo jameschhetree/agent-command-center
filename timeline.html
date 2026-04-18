@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Day in the Life -- Agent Command Center</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: rgba(255,255,255,0.04);
+    --surface-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f5f5f7;
+    --text-secondary: rgba(255,255,255,0.5);
+    --indigo: #818cf8;
+    --violet: #a78bfa;
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --amber: #fbbf24;
+    --radius: 16px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -40%;
+    left: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(129,140,248,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 20s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(167,139,250,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientDrift 25s ease-in-out infinite alternate-reverse;
+  }
+
+  @keyframes ambientDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, 3%) scale(1.1); }
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px 120px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) forwards;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--text); }
+  .back-link svg { width: 16px; height: 16px; }
+
+  .header-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(129,140,248,0.1);
+    border: 1px solid rgba(129,140,248,0.2);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: clamp(28px, 6vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 30%, #f5f5f7 60%, #818cf8 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+    line-height: 1.1;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .header-date {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* ---- STATS BAR ---- */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.15s forwards;
+  }
+  @media (max-width: 600px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.35s var(--ease-smooth);
+  }
+  .glass:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+  }
+
+  .stat-card {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent, var(--indigo)), transparent);
+    opacity: 0.5;
+  }
+  .stat-value {
+    font-size: clamp(22px, 5vw, 32px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ---- TIMELINE ---- */
+  .timeline {
+    position: relative;
+    padding: 0;
+  }
+
+  /* Center line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--border-hover) 5%, var(--border-hover) 95%, transparent);
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 700px) {
+    .timeline::before {
+      left: 24px;
+    }
+  }
+
+  .timeline-event {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0;
+    padding: 20px 0;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+  }
+
+  .timeline-event.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .timeline-event.left {
+    flex-direction: row-reverse;
+  }
+
+  /* Time marker on center line */
+  .timeline-marker {
+    position: absolute;
+    left: 50%;
+    top: 28px;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+
+  @media (max-width: 700px) {
+    .timeline-marker {
+      left: 24px;
+    }
+  }
+
+  .marker-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--dot-color, var(--indigo)), 0 0 20px -4px var(--dot-color, var(--indigo));
+    background: var(--dot-color, var(--indigo));
+    transition: box-shadow 0.3s;
+  }
+
+  .timeline-event.visible .marker-dot {
+    box-shadow: 0 0 0 2px var(--dot-color, var(--indigo)), 0 0 24px -2px var(--dot-color, var(--indigo));
+  }
+
+  .marker-time {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--dot-color, var(--indigo));
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Event card */
+  .event-card {
+    width: calc(50% - 40px);
+    padding: 20px 24px;
+    position: relative;
+    cursor: default;
+  }
+
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent, var(--indigo)), transparent);
+    opacity: 0.6;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .timeline-event.left .event-card {
+    margin-right: auto;
+    margin-left: 0;
+  }
+  .timeline-event.right .event-card {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  @media (max-width: 700px) {
+    .timeline-event,
+    .timeline-event.left {
+      flex-direction: row;
+      padding-left: 56px;
+    }
+    .event-card {
+      width: 100%;
+    }
+    .timeline-event.left .event-card,
+    .timeline-event.right .event-card {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .event-agent {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .event-agent-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .event-agent-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-secondary);
+  }
+
+  .event-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .event-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.85); }
+  }
+
+  /* ---- SCROLLBAR ---- */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<div class="container">
+
+  <header class="header">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Command Center
+    </a>
+    <div class="header-label">April 13, 2026</div>
+    <h1>DAY IN THE LIFE</h1>
+    <div class="header-date">17 hours of autonomous AI operations</div>
+  </header>
+
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="glass stat-card" style="--accent: var(--indigo)">
+      <div class="stat-value" data-target="8">0</div>
+      <div class="stat-label">Reports</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--emerald)">
+      <div class="stat-value" data-target="3">0</div>
+      <div class="stat-label">Trades</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--rose)">
+      <div class="stat-value" data-target="7">0</div>
+      <div class="stat-label">Bugs Fixed</div>
+    </div>
+    <div class="glass stat-card" style="--accent: var(--amber)">
+      <div class="stat-value" data-target="2">0</div>
+      <div class="stat-label">Bots Built</div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <div class="timeline" id="timeline"></div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // Agent colors
+  var agents = {
+    jeremy:  { color: '#818cf8', gradient: 'linear-gradient(135deg, #6366f1, #818cf8)', name: 'Jeremy' },
+    aaliyah: { color: '#a78bfa', gradient: 'linear-gradient(135deg, #7c3aed, #a78bfa)', name: 'Aaliyah' },
+    natalie: { color: '#34d399', gradient: 'linear-gradient(135deg, #059669, #34d399)', name: 'Natalie' },
+    rich:    { color: '#fbbf24', gradient: 'linear-gradient(135deg, #d97706, #fbbf24)', name: 'Rich' },
+    melody:  { color: '#fb7185', gradient: 'linear-gradient(135deg, #e11d48, #fb7185)', name: 'Melody' }
+  };
+
+  var events = [
+    { time: '8:00 AM',  agent: 'jeremy',  title: 'Daily Intelligence Brief Generated', desc: 'Oura health data pulled: Sleep 78, Readiness 73. News + trading digest delivered.' },
+    { time: '9:30 AM',  agent: 'jeremy',  title: 'Telegram: "5 pager" + Grant Beebe Photo', desc: 'James sends photo of Grant Beebe with the message "5 pager". Research pipeline triggered.' },
+    { time: '9:35 AM',  agent: 'natalie', title: 'Medicaid LTC Policy Research', desc: '14 web searches across CMS, KFF, state Medicaid databases. Building policy brief.' },
+    { time: '9:50 AM',  agent: 'natalie', title: 'Grant Beebe 5-Pager Delivered', desc: 'SA-Brief-Medicaid-LTC-5Pager.pdf generated. State Affairs format, McKinsey quality.' },
+    { time: '10:15 AM', agent: 'jeremy',  title: 'John Berlau Photo Received', desc: 'Another photo + "5 pager" message. Natalie begins finance policy research.' },
+    { time: '10:45 AM', agent: 'natalie', title: 'Finance Policy 5-Pager Delivered', desc: 'CEI background, regulatory reform policy brief. Delivered to Telegram.' },
+    { time: '11:00 AM', agent: 'aaliyah', title: 'Kalshi Arb Bot: 7 Bugs Diagnosed', desc: 'Full codebase audit. 7 critical bugs found, 10x market coverage expansion planned.' },
+    { time: '12:30 PM', agent: 'aaliyah', title: 'Directional Poly Betting Bot Built', desc: 'Built from scratch: Scanner + Brain + Kelly criterion sizing. Full architecture.' },
+    { time: '1:00 PM',  agent: 'rich',    title: '3 Paper Trades Placed', desc: 'Strait of Hormuz shipping, MegaETH token launch, Iran-Israel ceasefire. All tracked.' },
+    { time: '2:00 PM',  agent: 'natalie', title: 'Gill Stevens 1-Pager + 5-Pager', desc: 'GS1 US supply chain standards research. Both formats delivered.' },
+    { time: '3:30 PM',  agent: 'natalie', title: 'CoStar Group State-Level Research', desc: 'Deep research into CoStar Group state-level exposure. Sent as text analysis.' },
+    { time: '4:00 PM',  agent: 'natalie', title: 'Mark Freeman 5-Pager', desc: 'American Cruise Lines brief. Industry analysis, competitive positioning.' },
+    { time: '5:00 PM',  agent: 'natalie', title: 'Kristi Hamrick 5-Pager', desc: 'Students for Life Action. Policy advocacy landscape brief delivered.' },
+    { time: '6:00 PM',  agent: 'natalie', title: 'Live Nation 20-Page Deep Dive Started', desc: 'Massive antitrust research initiated. Jury verdict analysis, DOJ case review.' },
+    { time: '7:30 PM',  agent: 'natalie', title: 'Live Nation Report Delivered', desc: '20 pages. Full jury verdict analysis, state AG actions, remedies framework.' },
+    { time: '9:00 PM',  agent: 'aaliyah', title: 'Pixel Agents: D-pad + Assemble Deployed', desc: 'New movement controls and agent assembly features shipped to production.' },
+    { time: '11:00 PM', agent: 'natalie', title: 'MAC Agency 20-Page CompetitorIQ Report', desc: 'Full competitive intelligence report. 20 pages of market analysis delivered.' },
+    { time: '12:30 AM', agent: 'aaliyah', title: 'Agent Command Center Built', desc: 'This dashboard. Glassmorphic design, real-time stats, dark theme. Deployed.' }
+  ];
+
+  // Build timeline
+  var timeline = document.getElementById('timeline');
+  events.forEach(function(ev, i) {
+    var side = i % 2 === 0 ? 'left' : 'right';
+    var agent = agents[ev.agent];
+
+    var el = document.createElement('div');
+    el.className = 'timeline-event ' + side;
+    el.style.setProperty('--dot-color', agent.color);
+
+    el.innerHTML =
+      '<div class="timeline-marker">' +
+        '<div class="marker-time">' + ev.time + '</div>' +
+        '<div class="marker-dot" style="--dot-color:' + agent.color + ';background:' + agent.color + '"></div>' +
+      '</div>' +
+      '<div class="event-card glass" style="--accent:' + agent.color + '">' +
+        '<div class="event-agent">' +
+          '<div class="event-agent-dot" style="background:' + agent.color + '"></div>' +
+          '<span class="event-agent-name">' + agent.name + '</span>' +
+        '</div>' +
+        '<div class="event-title">' + ev.title + '</div>' +
+        '<div class="event-desc">' + ev.desc + '</div>' +
+      '</div>';
+
+    timeline.appendChild(el);
+  });
+
+  // IntersectionObserver for scroll-triggered entrance
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.timeline-event').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  // Count-up animation
+  function animateCount(el, target, duration) {
+    var start = performance.now();
+    function step(now) {
+      var progress = Math.min((now - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  document.querySelectorAll('.stat-value[data-target]').forEach(function(el) {
+    var target = parseInt(el.getAttribute('data-target'));
+    if (!isNaN(target)) {
+      setTimeout(function() { animateCount(el, target, 1800); }, 400);
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
