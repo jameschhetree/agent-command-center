@@ -597,15 +597,15 @@
   <!-- STATS BAR -->
   <section class="stats-bar">
     <div class="glass stat-card" style="--accent: var(--indigo)">
-      <div class="stat-value" data-target="12" data-suffix="">0</div>
+      <div class="stat-value" data-target="107" data-suffix="">0</div>
       <div class="stat-label">Reports Generated</div>
     </div>
     <div class="glass stat-card" style="--accent: var(--violet)">
-      <div class="stat-value" data-target="487" data-suffix="">0</div>
+      <div class="stat-value" data-target="694" data-suffix="">0</div>
       <div class="stat-label">Messages Processed</div>
     </div>
     <div class="glass stat-card" style="--accent: var(--emerald)">
-      <div class="stat-value" data-target="10" data-suffix="">0</div>
+      <div class="stat-value" data-target="38" data-suffix="">0</div>
       <div class="stat-label">Trades Placed</div>
     </div>
     <div class="glass stat-card" style="--accent: var(--amber)">
@@ -891,54 +891,53 @@
 
   // ---- LIVE DATA FETCH ----
   (function loadLiveData() {
+    // Try stats.json first (works on Vercel and locally), fall back to local API
+    var STATS_JSON_URL = 'stats.json';
     var API_URL = 'http://localhost:7901/api/stats';
-    fetch(API_URL, { mode: 'cors' })
-      .then(function(res) { return res.json(); })
-      .then(function(data) {
-        // Update stat cards with live values
-        var statCards = document.querySelectorAll('.stat-card');
-        // Reports Generated (index 0)
-        if (data.reports_generated !== undefined) {
-          var el0 = statCards[0].querySelector('.stat-value');
-          el0.setAttribute('data-target', data.reports_generated);
-          animateCount(el0, data.reports_generated, 2000);
-        }
-        // Messages Processed (index 1)
-        if (data.messages_processed !== undefined) {
-          var el1 = statCards[1].querySelector('.stat-value');
-          el1.setAttribute('data-target', data.messages_processed);
-          animateCount(el1, data.messages_processed, 2000);
-        }
-        // Trades Placed (index 2)
-        if (data.trades_placed !== undefined) {
-          var el2 = statCards[2].querySelector('.stat-value');
-          el2.setAttribute('data-target', data.trades_placed);
-          animateCount(el2, data.trades_placed, 2000);
-        }
-        // Bot status in health section
-        if (data.bot_status) {
-          var healthItems = document.querySelectorAll('.health-item');
-          healthItems.forEach(function(item) {
-            var name = item.querySelector('.health-name').textContent;
-            var statusEl = item.querySelector('.health-status');
-            if (name === 'Poly Bot') {
-              if (!data.bot_status.poly_bot) {
-                statusEl.innerHTML = '<span class="dot" style="background:var(--rose);animation:none"></span> Offline';
-                statusEl.style.color = 'var(--rose)';
-              }
-            }
-            if (name === 'Arb Bot') {
-              if (!data.bot_status.arb_bot) {
-                statusEl.innerHTML = '<span class="dot" style="background:var(--rose);animation:none"></span> Offline';
-                statusEl.style.color = 'var(--rose)';
-              }
-            }
-          });
-        }
+
+    function applyStats(data) {
+      var statCards = document.querySelectorAll('.stat-card');
+      // Reports Generated (index 0)
+      if (data.reports_generated !== undefined) {
+        var el0 = statCards[0].querySelector('.stat-value');
+        el0.setAttribute('data-target', data.reports_generated);
+        animateCount(el0, data.reports_generated, 2000);
+      }
+      // Messages Processed (index 1)
+      if (data.messages_processed !== undefined) {
+        var el1 = statCards[1].querySelector('.stat-value');
+        el1.setAttribute('data-target', data.messages_processed);
+        animateCount(el1, data.messages_processed, 2000);
+      }
+      // Trades Placed (index 2)
+      if (data.trades_placed !== undefined) {
+        var el2 = statCards[2].querySelector('.stat-value');
+        el2.setAttribute('data-target', data.trades_placed);
+        animateCount(el2, data.trades_placed, 2000);
+      }
+    }
+
+    // Primary: fetch stats.json (committed to repo, works everywhere)
+    fetch(STATS_JSON_URL + '?t=' + Date.now())
+      .then(function(res) {
+        if (!res.ok) throw new Error('stats.json not found');
+        return res.json();
       })
-      .catch(function(err) {
-        // API unreachable (e.g. Vercel static deploy) -- keep static fallback values
-        console.log('[live-data] API unreachable, using static values');
+      .then(function(data) {
+        console.log('[live-data] Loaded from stats.json, updated:', data.updated_at);
+        applyStats(data);
+      })
+      .catch(function() {
+        // Fallback: try local API server
+        fetch(API_URL, { mode: 'cors' })
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            console.log('[live-data] Loaded from local API');
+            applyStats(data);
+          })
+          .catch(function() {
+            console.log('[live-data] All sources unreachable, using static fallback values');
+          });
       });
   })();
 
