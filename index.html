@@ -551,6 +551,33 @@
 </head>
 <body>
 
+<!-- INTRO SPLASH -->
+<div id="introSplash" style="
+  position:fixed;inset:0;z-index:9999;background:#0a0a0a;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.8s ease-out;cursor:pointer;
+">
+  <video id="introVideo" autoplay muted playsinline style="
+    width:100%;max-width:1200px;border-radius:12px;
+    box-shadow:0 0 80px rgba(124,58,237,0.3);
+  ">
+    <source src="intro.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute;bottom:40px;color:rgba(255,255,255,0.4);font-size:14px;letter-spacing:2px;text-transform:uppercase;animation:pulse 2s ease-in-out infinite">Click anywhere or wait to enter</div>
+</div>
+<script>
+(function(){
+  const splash = document.getElementById('introSplash');
+  const video = document.getElementById('introVideo');
+  function dismiss(){
+    splash.style.opacity = '0';
+    setTimeout(() => splash.remove(), 800);
+  }
+  video.addEventListener('ended', dismiss);
+  splash.addEventListener('click', dismiss);
+})();
+</script>
+
 <canvas id="particleCanvas"></canvas>
 <div class="grid-bg"></div>
 
