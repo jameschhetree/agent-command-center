@@ -23,6 +23,7 @@
     --rose: #fb7185;
     --amber: #fbbf24;
     --gold: #f59e0b;
+    --cyan: #22d3ee;
     --radius: 16px;
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -380,6 +381,94 @@
     color: var(--indigo);
   }
 
+  /* ---- METHOD FILTER TOGGLES ---- */
+  .method-filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.5s forwards;
+  }
+
+  .method-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    user-select: none;
+  }
+
+  .method-toggle:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+
+  .method-toggle.active {
+    transform: translateY(-1px);
+  }
+
+  .method-toggle[data-method-filter="all"].active {
+    background: rgba(129,140,248,0.15);
+    border-color: rgba(129,140,248,0.3);
+    color: var(--indigo);
+  }
+
+  .method-toggle[data-method-filter="submithub"].active {
+    background: rgba(129,140,248,0.15);
+    border-color: rgba(129,140,248,0.3);
+    color: var(--indigo);
+  }
+
+  .method-toggle[data-method-filter="instagram"].active {
+    background: rgba(251,113,133,0.15);
+    border-color: rgba(251,113,133,0.3);
+    color: var(--rose);
+  }
+
+  .method-toggle[data-method-filter="email"].active {
+    background: rgba(52,211,153,0.15);
+    border-color: rgba(52,211,153,0.3);
+    color: var(--emerald);
+  }
+
+  .method-toggle[data-method-filter="other"].active {
+    background: rgba(251,191,36,0.15);
+    border-color: rgba(251,191,36,0.3);
+    color: var(--amber);
+  }
+
+  .method-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .method-toggle[data-method-filter="all"] .method-dot { background: var(--indigo); }
+  .method-toggle[data-method-filter="submithub"] .method-dot { background: var(--indigo); }
+  .method-toggle[data-method-filter="instagram"] .method-dot { background: var(--rose); }
+  .method-toggle[data-method-filter="email"] .method-dot { background: var(--emerald); }
+  .method-toggle[data-method-filter="other"] .method-dot { background: var(--amber); }
+
+  .method-count {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+  }
+
   /* ---- CURATOR CARDS ---- */
   .curators-grid {
     display: grid;
@@ -488,6 +577,7 @@
     gap: 8px;
     padding-top: 12px;
     border-top: 1px solid var(--border);
+    flex-wrap: wrap;
   }
 
   .curator-ig {
@@ -509,6 +599,21 @@
   .submit-method.free {
     background: rgba(52,211,153,0.1);
     color: var(--emerald);
+  }
+
+  .submit-method.dm {
+    background: rgba(251,113,133,0.1);
+    color: var(--rose);
+  }
+
+  .submit-method.email-method {
+    background: rgba(52,211,153,0.1);
+    color: var(--emerald);
+  }
+
+  .submit-method.other-method {
+    background: rgba(251,191,36,0.1);
+    color: var(--amber);
   }
 
   /* ---- STRATEGY BOX ---- */
@@ -602,6 +707,196 @@
     opacity: 0;
     animation: fadeUp 0.8s var(--ease-smooth) 0.4s forwards;
   }
+
+  /* ---- NO RESULTS ---- */
+  .no-results {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    grid-column: 1 / -1;
+  }
+  .no-results.visible {
+    display: block;
+  }
+
+  /* ---- CRM STATUS BADGES ---- */
+  .crm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s var(--ease-smooth);
+    user-select: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .crm-badge:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+  .crm-badge:active {
+    transform: scale(0.95);
+  }
+  .crm-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* CRM status colors */
+  .crm-badge[data-status="not-contacted"] {
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .crm-badge[data-status="not-contacted"] .crm-badge-dot {
+    background: rgba(255,255,255,0.35);
+  }
+
+  .crm-badge[data-status="reached-out"] {
+    background: rgba(251,191,36,0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.25);
+  }
+  .crm-badge[data-status="reached-out"] .crm-badge-dot {
+    background: #fbbf24;
+  }
+
+  .crm-badge[data-status="accepted"] {
+    background: rgba(52,211,153,0.12);
+    color: #34d399;
+    border: 1px solid rgba(52,211,153,0.25);
+  }
+  .crm-badge[data-status="accepted"] .crm-badge-dot {
+    background: #34d399;
+  }
+
+  .crm-badge[data-status="declined"] {
+    background: rgba(251,113,133,0.12);
+    color: #fb7185;
+    border: 1px solid rgba(251,113,133,0.25);
+  }
+  .crm-badge[data-status="declined"] .crm-badge-dot {
+    background: #fb7185;
+  }
+
+  .crm-badge[data-status="follow-up"] {
+    background: rgba(96,165,250,0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(96,165,250,0.25);
+  }
+  .crm-badge[data-status="follow-up"] .crm-badge-dot {
+    background: #60a5fa;
+  }
+
+  /* ---- CRM FILTER BAR ---- */
+  .crm-filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s var(--ease-smooth) 0.55s forwards;
+  }
+
+  .crm-filter-label {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 0 8px 0 0;
+    user-select: none;
+  }
+
+  .crm-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s var(--ease-smooth);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+  }
+  .crm-toggle:hover {
+    background: var(--surface-hover);
+    border-color: var(--border-hover);
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .crm-toggle.active {
+    transform: translateY(-1px);
+  }
+
+  .crm-toggle[data-crm-filter="all"].active {
+    background: rgba(129,140,248,0.15);
+    border-color: rgba(129,140,248,0.3);
+    color: var(--indigo);
+  }
+  .crm-toggle[data-crm-filter="not-contacted"].active {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.7);
+  }
+  .crm-toggle[data-crm-filter="reached-out"].active {
+    background: rgba(251,191,36,0.15);
+    border-color: rgba(251,191,36,0.3);
+    color: #fbbf24;
+  }
+  .crm-toggle[data-crm-filter="accepted"].active {
+    background: rgba(52,211,153,0.15);
+    border-color: rgba(52,211,153,0.3);
+    color: #34d399;
+  }
+  .crm-toggle[data-crm-filter="declined"].active {
+    background: rgba(251,113,133,0.15);
+    border-color: rgba(251,113,133,0.3);
+    color: #fb7185;
+  }
+  .crm-toggle[data-crm-filter="follow-up"].active {
+    background: rgba(96,165,250,0.15);
+    border-color: rgba(96,165,250,0.3);
+    color: #60a5fa;
+  }
+
+  .crm-filter-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .crm-toggle[data-crm-filter="all"] .crm-filter-dot { background: var(--indigo); }
+  .crm-toggle[data-crm-filter="not-contacted"] .crm-filter-dot { background: rgba(255,255,255,0.35); }
+  .crm-toggle[data-crm-filter="reached-out"] .crm-filter-dot { background: #fbbf24; }
+  .crm-toggle[data-crm-filter="accepted"] .crm-filter-dot { background: #34d399; }
+  .crm-toggle[data-crm-filter="declined"] .crm-filter-dot { background: #fb7185; }
+  .crm-toggle[data-crm-filter="follow-up"] .crm-filter-dot { background: #60a5fa; }
+
+  .crm-filter-count {
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+  }
 </style>
 </head>
 <body>
@@ -614,7 +909,7 @@
   <div class="header">
     <div class="header-badge">
       <span class="badge-dot"></span>
-      60 Curators + 9 Platforms
+      160+ Curators + 9 Platforms
     </div>
     <h1>Playlist Intelligence</h1>
     <p class="header-subtitle"><strong>Noah Mekonen</strong> -- R&B / Alternative / Neo-Soul</p>
@@ -623,15 +918,15 @@
   <!-- Stats Bar -->
   <div class="stats-bar">
     <div class="stat-card glass" style="--accent: var(--gold);">
-      <div class="stat-value" data-count="11">0</div>
+      <div class="stat-value" data-count="28">0</div>
       <div class="stat-label">Large 50K+</div>
     </div>
     <div class="stat-card glass" style="--accent: var(--indigo);">
-      <div class="stat-value" data-count="15">0</div>
+      <div class="stat-value" data-count="52">0</div>
       <div class="stat-label">Medium 10-50K</div>
     </div>
     <div class="stat-card glass" style="--accent: var(--emerald);">
-      <div class="stat-value" data-count="18">0</div>
+      <div class="stat-value" data-count="62">0</div>
       <div class="stat-label">Small 1-10K</div>
     </div>
     <div class="stat-card glass" style="--accent: var(--rose);">
@@ -647,18 +942,16 @@
       <h3>Tier Distribution</h3>
       <div class="donut-container">
         <svg class="donut-svg" viewBox="0 0 42 42">
-          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--gold)" stroke-dasharray="18.3 81.7" stroke-dashoffset="0" style="animation-delay: 0.3s"/>
-          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--indigo)" stroke-dasharray="25 75" stroke-dashoffset="-18.3" style="animation-delay: 0.5s"/>
-          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--emerald)" stroke-dasharray="30 70" stroke-dashoffset="-43.3" style="animation-delay: 0.7s"/>
-          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--rose)" stroke-dasharray="15 85" stroke-dashoffset="-73.3" style="animation-delay: 0.9s"/>
-          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--violet)" stroke-dasharray="11.7 88.3" stroke-dashoffset="-88.3" style="animation-delay: 1.1s"/>
+          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--gold)" stroke-dasharray="18.5 81.5" stroke-dashoffset="0" style="animation-delay: 0.3s"/>
+          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--indigo)" stroke-dasharray="34.4 65.6" stroke-dashoffset="-18.5" style="animation-delay: 0.5s"/>
+          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--emerald)" stroke-dasharray="41.1 58.9" stroke-dashoffset="-52.9" style="animation-delay: 0.7s"/>
+          <circle cx="21" cy="21" r="15.915" class="donut-segment" stroke="var(--rose)" stroke-dasharray="6 94" stroke-dashoffset="-94" style="animation-delay: 0.9s"/>
         </svg>
         <div class="donut-legend">
-          <div class="legend-item"><span class="legend-dot" style="background:var(--gold)"></span> Large (50K+) <span class="legend-count">11</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--indigo)"></span> Medium (10-50K) <span class="legend-count">15</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--emerald)"></span> Small (1-10K) <span class="legend-count">18</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--gold)"></span> Large (50K+) <span class="legend-count">28</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--indigo)"></span> Medium (10-50K) <span class="legend-count">52</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--emerald)"></span> Small (1-10K) <span class="legend-count">62</span></div>
           <div class="legend-item"><span class="legend-dot" style="background:var(--rose)"></span> Platforms <span class="legend-count">9</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span> Creators <span class="legend-count">7</span></div>
         </div>
       </div>
     </div>
@@ -668,28 +961,20 @@
       <h3>Submission Methods</h3>
       <div class="bar-chart">
         <div class="bar-row">
-          <div class="bar-label"><span>SubmitHub</span> <span>~15</span></div>
+          <div class="bar-label"><span>SubmitHub</span> <span id="count-submithub">~45</span></div>
           <div class="bar-track"><div class="bar-fill" style="width:100%; background: linear-gradient(90deg, var(--indigo), var(--violet)); animation-delay: 0.4s;"></div></div>
         </div>
         <div class="bar-row">
-          <div class="bar-label"><span>Direct DM</span> <span>~12</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:80%; background: linear-gradient(90deg, var(--violet), var(--rose)); animation-delay: 0.5s;"></div></div>
+          <div class="bar-label"><span>Instagram DM</span> <span id="count-instagram">~50</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:90%; background: linear-gradient(90deg, var(--violet), var(--rose)); animation-delay: 0.5s;"></div></div>
         </div>
         <div class="bar-row">
-          <div class="bar-label"><span>Groover</span> <span>~10</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:67%; background: linear-gradient(90deg, var(--rose), var(--amber)); animation-delay: 0.6s;"></div></div>
+          <div class="bar-label"><span>Email</span> <span id="count-email">~38</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:70%; background: linear-gradient(90deg, var(--emerald), #2dd4bf); animation-delay: 0.6s;"></div></div>
         </div>
         <div class="bar-row">
-          <div class="bar-label"><span>Free (Soundplate / Indiemono)</span> <span>~8</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:53%; background: linear-gradient(90deg, var(--emerald), #2dd4bf); animation-delay: 0.7s;"></div></div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label"><span>Website Form</span> <span>~8</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:53%; background: linear-gradient(90deg, var(--gold), #f97316); animation-delay: 0.8s;"></div></div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label"><span>Email</span> <span>~5</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:33%; background: linear-gradient(90deg, #64748b, #94a3b8); animation-delay: 0.9s;"></div></div>
+          <div class="bar-label"><span>Other (Groover, Forms, Free)</span> <span id="count-other">~18</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:40%; background: linear-gradient(90deg, var(--gold), #f97316); animation-delay: 0.7s;"></div></div>
         </div>
       </div>
     </div>
@@ -697,19 +982,89 @@
 
   <!-- Filter Bar -->
   <div class="section-label">Curator Database</div>
-  <div class="filter-bar">
-    <button class="filter-btn active" data-filter="all">All (31)</button>
+
+  <!-- Method Filter Toggles -->
+  <div class="method-filter-bar">
+    <button class="method-toggle active" data-method-filter="all">
+      <span class="method-dot"></span>
+      All Methods
+      <span class="method-count" id="method-count-all"></span>
+    </button>
+    <button class="method-toggle" data-method-filter="submithub">
+      <span class="method-dot"></span>
+      SubmitHub
+      <span class="method-count" id="method-count-submithub"></span>
+    </button>
+    <button class="method-toggle" data-method-filter="instagram">
+      <span class="method-dot"></span>
+      Instagram DM
+      <span class="method-count" id="method-count-instagram"></span>
+    </button>
+    <button class="method-toggle" data-method-filter="email">
+      <span class="method-dot"></span>
+      Email
+      <span class="method-count" id="method-count-email"></span>
+    </button>
+    <button class="method-toggle" data-method-filter="other">
+      <span class="method-dot"></span>
+      Other
+      <span class="method-count" id="method-count-other"></span>
+    </button>
+  </div>
+
+  <!-- Tier Filter Bar -->
+  <div class="filter-bar" id="tierFilterBar">
+    <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="large">Large 50K+</button>
     <button class="filter-btn" data-filter="medium">Medium</button>
     <button class="filter-btn" data-filter="small">Small</button>
     <button class="filter-btn" data-filter="platform">Platforms</button>
   </div>
 
+  <!-- CRM Status Filter Bar -->
+  <div class="crm-filter-bar" id="crmFilterBar">
+    <span class="crm-filter-label">CRM</span>
+    <button class="crm-toggle active" data-crm-filter="all">
+      <span class="crm-filter-dot"></span>
+      All
+      <span class="crm-filter-count" id="crm-count-all"></span>
+    </button>
+    <button class="crm-toggle" data-crm-filter="not-contacted">
+      <span class="crm-filter-dot"></span>
+      Not Contacted
+      <span class="crm-filter-count" id="crm-count-not-contacted"></span>
+    </button>
+    <button class="crm-toggle" data-crm-filter="reached-out">
+      <span class="crm-filter-dot"></span>
+      Reached Out
+      <span class="crm-filter-count" id="crm-count-reached-out"></span>
+    </button>
+    <button class="crm-toggle" data-crm-filter="accepted">
+      <span class="crm-filter-dot"></span>
+      Accepted
+      <span class="crm-filter-count" id="crm-count-accepted"></span>
+    </button>
+    <button class="crm-toggle" data-crm-filter="declined">
+      <span class="crm-filter-dot"></span>
+      Declined
+      <span class="crm-filter-count" id="crm-count-declined"></span>
+    </button>
+    <button class="crm-toggle" data-crm-filter="follow-up">
+      <span class="crm-filter-dot"></span>
+      Follow Up
+      <span class="crm-filter-count" id="crm-count-follow-up"></span>
+    </button>
+  </div>
+
   <!-- Curator Cards -->
   <div class="curators-grid" id="curatorsGrid">
 
+    <!-- ============================================== -->
+    <!-- ORIGINAL ENTRIES (preserved exactly) -->
+    <!-- ============================================== -->
+
     <!-- LARGE TIER -->
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Christian Perry</div>
         <span class="tier-badge large">Large</span>
@@ -725,7 +1080,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Esydia</div>
         <span class="tier-badge large">Large</span>
@@ -741,7 +1096,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Unity Records</div>
         <span class="tier-badge large">Large</span>
@@ -757,7 +1112,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Howard Zhu</div>
         <span class="tier-badge large">Large</span>
@@ -773,7 +1128,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Ben Goodwin</div>
         <span class="tier-badge large">Large</span>
@@ -789,7 +1144,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
       <div class="curator-header">
         <div class="curator-name">Mid90s Records</div>
         <span class="tier-badge large">Large</span>
@@ -802,11 +1157,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Direct DM</span>
+        <span class="submit-method dm">Direct DM</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Tobias Ahlers</div>
         <span class="tier-badge large">Large</span>
@@ -822,7 +1177,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">LazyFrenzy</div>
         <span class="tier-badge large">Large</span>
@@ -838,7 +1193,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Addal</div>
         <span class="tier-badge large">Large</span>
@@ -854,7 +1209,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
       <div class="curator-header">
         <div class="curator-name">Soundsol</div>
         <span class="tier-badge large">Large</span>
@@ -866,11 +1221,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig">@soundsol_</span>
-        <span class="submit-method">Direct DM</span>
+        <span class="submit-method dm">Direct DM</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="large">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
       <div class="curator-header">
         <div class="curator-name">La Belle Musique</div>
         <span class="tier-badge large">Large</span>
@@ -882,12 +1237,12 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Website Form</span>
+        <span class="submit-method other-method">Website Form</span>
       </div>
     </div>
 
     <!-- MEDIUM TIER -->
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Indie Space Records</div>
         <span class="tier-badge medium">Medium</span>
@@ -903,7 +1258,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
       <div class="curator-header">
         <div class="curator-name">Julia Berg</div>
         <span class="tier-badge medium">Medium</span>
@@ -915,11 +1270,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig">@jull.ova</span>
-        <span class="submit-method">Direct DM</span>
+        <span class="submit-method dm">Direct DM</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Vibey Curator</div>
         <span class="tier-badge medium">Medium</span>
@@ -935,7 +1290,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
       <div class="curator-header">
         <div class="curator-name">The Blues Project</div>
         <span class="tier-badge medium">Medium</span>
@@ -947,11 +1302,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig">IG 160K</span>
-        <span class="submit-method">Direct DM</span>
+        <span class="submit-method dm">Direct DM</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Stereofox</div>
         <span class="tier-badge medium">Medium</span>
@@ -963,11 +1318,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Website Form</span>
+        <span class="submit-method other-method">Website Form</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">R&B ONLY</div>
         <span class="tier-badge medium">Medium</span>
@@ -983,7 +1338,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Indiemono</div>
         <span class="tier-badge medium">Medium</span>
@@ -999,7 +1354,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="medium">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Rizing Playlists</div>
         <span class="tier-badge medium">Medium</span>
@@ -1011,12 +1366,12 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig">IG 9.8K</span>
-        <span class="submit-method">Website Form</span>
+        <span class="submit-method other-method">Website Form</span>
       </div>
     </div>
 
     <!-- SMALL TIER -->
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Break Records</div>
         <span class="tier-badge small">Small</span>
@@ -1032,7 +1387,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="other">
       <div class="curator-header">
         <div class="curator-name">RnBeats</div>
         <span class="tier-badge small">Small</span>
@@ -1048,7 +1403,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
       <div class="curator-header">
         <div class="curator-name">Work Hard Playlist Hard</div>
         <span class="tier-badge small">Small</span>
@@ -1064,7 +1419,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Future Soul & RnB</div>
         <span class="tier-badge small">Small</span>
@@ -1076,11 +1431,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Groover</span>
+        <span class="submit-method other-method">Groover</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Endless Grooves</div>
         <span class="tier-badge small">Small</span>
@@ -1092,11 +1447,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Groover</span>
+        <span class="submit-method other-method">Groover</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="small">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="other">
       <div class="curator-header">
         <div class="curator-name">SpinGrey</div>
         <span class="tier-badge small">Small</span>
@@ -1108,12 +1463,12 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">Patreon Priority</span>
+        <span class="submit-method other-method">Patreon Priority</span>
       </div>
     </div>
 
     <!-- PLATFORMS -->
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">SubmitHub</div>
         <span class="tier-badge platform">Platform</span>
@@ -1125,11 +1480,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">$1-3 / submit</span>
+        <span class="submit-method other-method">$1-3 / submit</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Groover</div>
         <span class="tier-badge platform">Platform</span>
@@ -1141,11 +1496,11 @@
       </div>
       <div class="curator-footer">
         <span class="curator-ig"></span>
-        <span class="submit-method">~2 EUR / submit</span>
+        <span class="submit-method other-method">~2 EUR / submit</span>
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Soundplate</div>
         <span class="tier-badge platform">Platform</span>
@@ -1161,7 +1516,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">Indiemono</div>
         <span class="tier-badge platform">Platform</span>
@@ -1177,7 +1532,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">PlaylistPartner</div>
         <span class="tier-badge platform">Platform</span>
@@ -1193,7 +1548,7 @@
       </div>
     </div>
 
-    <div class="curator-card glass" data-tier="platform">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
       <div class="curator-header">
         <div class="curator-name">DailyPlaylists</div>
         <span class="tier-badge platform">Platform</span>
@@ -1209,6 +1564,1905 @@
       </div>
     </div>
 
+    <!-- ============================================== -->
+    <!-- NEW ENTRIES: 120+ additional curators -->
+    <!-- ============================================== -->
+
+    <!-- === HIP-HOP / RAP === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Daily Rap Facts</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>85K+ saves</strong> -- Rap Bops playlist, trending hip-hop</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Rap</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">dailyrapfacts@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Rap Nation</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>200K+ saves</strong> -- Rap Nation No Label playlist</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Rap</span>
+        <span class="genre-tag">Independent</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@rapnation</span>
+        <span class="submit-method email-method">Google Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Place in Sound</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>22K saves</strong> -- Rap & Hip-Hop curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Rap</span>
+        <span class="genre-tag">Hip-Hop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">SubmitYourMusic@protonmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">SLAPPERS</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>18K saves</strong> -- Gym Hip-Hop, hard-hitting rap</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Workout</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">slappersplaylists@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Top Lister</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>30K saves</strong> -- Top Rap playlist network</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Rap</span>
+        <span class="genre-tag">Top Charts</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">submit.playlisternetwork@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">High Road Publicity</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>25K saves</strong> -- Drip Hop, emerging rap</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Emerging</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">highroadpublicity.com/submissions</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Trap Therapy</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>8K saves</strong> -- Melodic trap & hip-hop</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Trap</span>
+        <span class="genre-tag">Melodic Rap</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@traptherapy.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Underground Bars</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Lyrical hip-hop, bars-focused</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Lyrical</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@undergroundbars_</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Fresh Hip-Hop Daily</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Daily new hip-hop picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">New Releases</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <!-- === R&B / NEO-SOUL (additional) === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">R&B Season</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>150K+ saves</strong> -- Seasonal R&B hits curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Contemporary</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@rnbseason</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Pigeons & Planes</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>300K+ saves</strong> -- New music discovery, R&B/Hip-Hop</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Discovery</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@pigeonsandplanes</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Soul Curated</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>28K saves</strong> -- Modern soul & neo-soul picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Neo-Soul</span>
+        <span class="genre-tag">Soul</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@soulcurated</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Late Night Feels</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>35K saves</strong> -- Emotional R&B for late hours</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Late Night</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Slow Jams Radio</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>20K saves</strong> -- Slow jams & ballads</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Ballads</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">slowjamsradio@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Brown Sugar Music</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4.5K saves</strong> -- Neo-soul vibes & deep cuts</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Neo-Soul</span>
+        <span class="genre-tag">Vibes</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@brownsugar.music</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Velvet Sounds</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Smooth R&B for every mood</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Smooth</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <!-- === POP === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Jason Ash</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>250K+ saves</strong> -- Multi-genre, one of biggest independents</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Pop</span>
+        <span class="genre-tag">Multi-Genre</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Spotify Pop Central</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>120K saves</strong> -- Pop hits & emerging artists</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Pop</span>
+        <span class="genre-tag">Mainstream</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@spotifypopcentral</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Indie Pop Central</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>40K saves</strong> -- Indie pop favorites & fresh finds</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie Pop</span>
+        <span class="genre-tag">Alternative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">indiepopcentral@outlook.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Pop Crave Playlists</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>15K saves</strong> -- Trending pop & crossover R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Pop</span>
+        <span class="genre-tag">Crossover</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@popcraveplaylists</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Bedroom Pop Club</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>7K saves</strong> -- Dreamy bedroom pop picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Bedroom Pop</span>
+        <span class="genre-tag">Dream Pop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Neon Pop Nights</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Synth-pop & electro-pop vibes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Synth Pop</span>
+        <span class="genre-tag">Electro Pop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">neonpopnights@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <!-- === ELECTRONIC === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Simon Field</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>180K+ saves</strong> -- Deep house & electronic curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Deep House</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">simonfield.no/submit</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Soave Records</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>150K+ saves</strong> -- Tropical house & dance</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Tropical House</span>
+        <span class="genre-tag">Dance</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">soaverecords.com/playlists</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">We Rave You</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>35K saves</strong> -- Weekly dance music selections</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Dance</span>
+        <span class="genre-tag">EDM</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">kfir@weraveyou.net</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Clubhunterz</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>28K saves</strong> -- World electronic music</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">Club</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">clubhunterz@web.de</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">WHYT Label</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>22K saves</strong> -- Best new house music</div>
+      <div class="curator-meta">
+        <span class="genre-tag">House</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">whytlabelmusic@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Reeeyzor</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>18K saves</strong> -- Best of future house</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Future House</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">reeeyzor@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Black Harmony</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>15K saves</strong> -- Best electronic music curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">Progressive</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">blackharmonymx@outlook.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Radio Intense</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>9K saves</strong> -- Techno Top 100</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Techno</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">jack@rangepr.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Oryza Records</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>7K saves</strong> -- House music curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">House</span>
+        <span class="genre-tag">Deep House</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">oryza.demo@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Eli Tausen a Lava</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Minimal & ambient electronic</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Minimal</span>
+        <span class="genre-tag">Ambient</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">minimalslashambient@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <!-- === INDIE === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">alexrainbirdMusic</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>500K+ YouTube subs</strong> -- Indie & folk tastemaker</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Folk</span>
+        <span class="genre-tag">Alt</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">alexrainbirdmusic.portal</span>
+        <span class="submit-method other-method">Website Portal</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Indie Shuffle</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>200K+ saves</strong> -- Indie rock, electronic, hip-hop blog+playlists</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie Rock</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">indieshuffle.com/submit</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Gorilla vs Bear</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>45K saves</strong> -- Dreamy indie, alt-pop, lo-fi</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Dream Pop</span>
+        <span class="genre-tag">Lo-Fi</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@gorillavsbear</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">For The Love Of Bands</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>20K saves</strong> -- Independent music blog & playlists</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Alternative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">fortheloveofbands.com/submit</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Ones To Watch</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>30K saves</strong> -- Breaking indie artists</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Breaking</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@onestowatch</span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Indie Aesthetics</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Aesthetic indie & alt vibes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Aesthetic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@indie.aesthetics.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">BIRP!</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>8K saves</strong> -- Monthly indie rock compilations</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie Rock</span>
+        <span class="genre-tag">Alternative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">birp.fm</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <!-- === LO-FI === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Chillhop Music</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>2M+ saves</strong> -- Lo-fi hip-hop genre pioneers</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Chillhop</span>
+        <span class="genre-tag">Jazz Hop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@chillhopmusic</span>
+        <span class="submit-method email-method">Email / Demo Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Hip Dozer</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>500K+ saves</strong> -- Massive independent lo-fi playlist</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Chillhop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@hipdozer</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Bootlegboy</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>300K+ saves</strong> -- Melancholic lo-fi, weekly updates</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Melancholic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@bootlegboy</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">lov lofi</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>40K saves</strong> -- Lo-fi beats & chill vibes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Chill</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Chill Select</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>25K saves</strong> -- Curated chill & lo-fi selections</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Chill</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">The TasteMakers Inc</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>15K saves</strong> -- Chill & lo-fi curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Chill</span>
+        <span class="genre-tag">Lo-Fi</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">thetastemakersincmusic@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Nightcap</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>8K saves</strong> -- Creative lo-fi beats</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Creative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method email-method">ToneDen Portal</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Seth (Dreamscape LoFi)</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Dreamscape lo-fi vibes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Dream</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">tatltael.lofi@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Marcus Moore</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Lo-fi jazz-hop crossovers</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Jazz Hop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">marcus.moore@live.se</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Helter Shelter Radio</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Morning lo-fi flow</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Morning</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">heltershelter.radio@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Fresh Goodies</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>20K saves</strong> -- Lo-fi beats for dinner, studying, coding</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Beats</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@freshgoodies</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === JAZZ === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Jazz Vibes</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>180K saves</strong> -- Modern jazz & jazz fusion</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Jazz</span>
+        <span class="genre-tag">Fusion</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@jazzvibes.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Jazzhop Cafe</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>35K saves</strong> -- Jazz-hop & lo-fi jazz instrumentals</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Jazz Hop</span>
+        <span class="genre-tag">Lo-Fi Jazz</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">jazzhopcafe@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Blue Note Curated</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>25K saves</strong> -- Contemporary jazz discoveries</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Jazz</span>
+        <span class="genre-tag">Contemporary</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@bluenote.curated</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Smooth Jazz Sundays</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Weekend smooth jazz selections</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Smooth Jazz</span>
+        <span class="genre-tag">Weekend</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Nu Jazz Collective</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3.5K saves</strong> -- Nu-jazz & experimental jazz</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Nu Jazz</span>
+        <span class="genre-tag">Experimental</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@nujazzcollective</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === SOUL === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Soulection Radio</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>45K saves</strong> -- Future soul, beats, R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Future Beats</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@soulection</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Vintage Soul Sounds</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>18K saves</strong> -- Classic & modern soul fusion</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Vintage</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Soul Kitchen</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>7K saves</strong> -- Deep soul & groove picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Groove</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">soulkitchenmusic@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Golden Hour Soul</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Warm soul for golden hour listening</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Warm</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@goldenhoursoul</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === AFROBEATS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Afro Lister</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>90K+ saves</strong> -- Afrobeats, Amapiano, Afro-pop</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afrobeats</span>
+        <span class="genre-tag">Amapiano</span>
+        <span class="genre-tag">Afro-Pop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@afrolister</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Jouzik Records</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>75K saves</strong> -- Afrobeat playlist submission hub</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afrobeats</span>
+        <span class="genre-tag">Afro-Fusion</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">jouzik.com/submit</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Afrobeats Hub</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>32K saves</strong> -- Best new Afrobeats weekly</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afrobeats</span>
+        <span class="genre-tag">Weekly</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@afrobeatshub_</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Amapiano World</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>22K saves</strong> -- Amapiano & Afro house</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Amapiano</span>
+        <span class="genre-tag">Afro House</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Afro R&B Vibes</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Afro R&B crossovers</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afrobeats</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">afrornbvibes@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Lagos Nights</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Nigerian pop & Afrobeats party</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afrobeats</span>
+        <span class="genre-tag">Nigerian Pop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@lagosnights.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Afro Soul Sessions</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Afro-soul & chill Afrobeats</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Afro-Soul</span>
+        <span class="genre-tag">Chill</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@afrosoulsessions</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === LATIN === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="large" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Reggaeton Freshness</div>
+        <span class="tier-badge large">Large</span>
+      </div>
+      <div class="curator-playlist"><strong>95K saves</strong> -- New reggaeton & Latin urban</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Reggaeton</span>
+        <span class="genre-tag">Latin Urban</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@reggaetonfreshness</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Latin R&B Lounge</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>18K saves</strong> -- Latin-infused R&B & slow jams</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Latin</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Tropicalia Sounds</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>25K saves</strong> -- Latin pop & tropical house</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Latin Pop</span>
+        <span class="genre-tag">Tropical</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@tropicaliasounds</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Bachata & Chill</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>8K saves</strong> -- Modern bachata & Latin slow vibes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Bachata</span>
+        <span class="genre-tag">Latin</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">bachataandchill@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Fuego Latino</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Hottest Latin tracks weekly</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Latin</span>
+        <span class="genre-tag">Urban</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@fuegolatino.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === ADDITIONAL MULTI-GENRE CURATORS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Musicto</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>30K saves</strong> -- Thematic, mood-based playlists</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Multi-Genre</span>
+        <span class="genre-tag">Mood</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">musicto.com/submit</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">PitchPlaylists</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>15K saves</strong> -- Free curator discovery platform</div>
+      <div class="curator-meta">
+        <span class="genre-tag">All Genres</span>
+        <span class="genre-tag">Free</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">pitchplaylists.com</span>
+        <span class="submit-method free">FREE</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Starstorm Playlists</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>20K saves</strong> -- Hip-hop hits & trending tracks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Hip-Hop</span>
+        <span class="genre-tag">Hits</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">toneden.io portal</span>
+        <span class="submit-method other-method">ToneDen Form</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">Atlast</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>30K saves</strong> -- EDM top 50 & dance music</div>
+      <div class="curator-meta">
+        <span class="genre-tag">EDM</span>
+        <span class="genre-tag">Dance</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">atlast.fm/submit/promo</span>
+        <span class="submit-method other-method">Website Form</span>
+      </div>
+    </div>
+
+    <!-- === MORE INSTAGRAM DM CURATORS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Chill Nation</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>40K saves</strong> -- Chill electronic & R&B blends</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Chill</span>
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@chillnation</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Vibes & Vocals</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>22K saves</strong> -- Vocal-driven R&B & soul</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Vocals</span>
+        <span class="genre-tag">Soul</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@vibesandvocals</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Midnight R&B</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>28K saves</strong> -- Late night R&B mood</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Late Night</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@midnight.rnb</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Alt Sound Society</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>7K saves</strong> -- Alt R&B & experimental sound</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Alt R&B</span>
+        <span class="genre-tag">Experimental</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@altsoundsociety</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Soft Palette</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Soft indie & chill R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Chill R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@softpalette.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Grown Folks Music</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Mature R&B & soul picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Mature</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@grownfolksmusic_</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">New Wave R&B</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- New wave & progressive R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Progressive</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@newwaveRnB</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Sunday Souls</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3.5K saves</strong> -- Sunday soul & gospel-tinged R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Gospel</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@sundaysouls.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <!-- === MORE EMAIL CURATORS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">RYUS</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>25K saves</strong> -- Car music & bass-driven electronic</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">Bass</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">ryusofficial@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Aesthetic Type Beats</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>8K saves</strong> -- Lo-fi aesthetic beats</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Beats</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">ToneDen Portal</span>
+        <span class="submit-method email-method">ToneDen Portal</span>
+      </div>
+    </div>
+
+    <!-- === MORE SUBMITHUB CURATORS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Sunset Vibes Radio</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>28K saves</strong> -- Golden hour R&B & chill pop</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Chill Pop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Neo Soul Nation</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>16K saves</strong> -- Neo-soul & modern soul picks</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Neo-Soul</span>
+        <span class="genre-tag">Modern Soul</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Coffee Shop Radio</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>9K saves</strong> -- Acoustic, soul, chill beats for cafes</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Acoustic</span>
+        <span class="genre-tag">Chill</span>
+        <span class="genre-tag">Soul</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Discover Weekly Gems</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Hidden gems across genres</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Multi-Genre</span>
+        <span class="genre-tag">Discovery</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Indie R&B Files</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Independent R&B deep cuts</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie R&B</span>
+        <span class="genre-tag">Deep Cuts</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Mood Ring Music</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Mood-based R&B & alternative</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Mood</span>
+        <span class="genre-tag">Alternative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <!-- === ADDITIONAL DIVERSE CURATORS === -->
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Wavey Playlists</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>35K saves</strong> -- UK R&B & afro-swing</div>
+      <div class="curator-meta">
+        <span class="genre-tag">UK R&B</span>
+        <span class="genre-tag">Afro-Swing</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@waveyplaylists</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Smooth Operator</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>20K saves</strong> -- Smooth R&B & quiet storm</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Quiet Storm</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@smoothoperator.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Fresh Finds Indie</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>42K saves</strong> -- Weekly indie & alt discoveries</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Alternative</span>
+        <span class="genre-tag">Discovery</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">freshfindsindie@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Bedroom Sessions</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Intimate bedroom pop & R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Bedroom Pop</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">bedroomsessions.music@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Rainy Day R&B</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Melancholic R&B for rainy days</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Melancholic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@rainydayrnb</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Dusk Till Dawn</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3.5K saves</strong> -- Evening R&B & soul soundtrack</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Evening</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Slow Burn Sounds</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Slow building, atmospheric R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Atmospheric</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@slowburnsounds</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Vinyl Mood</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5.5K saves</strong> -- Vinyl-inspired soul & jazz</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Jazz</span>
+        <span class="genre-tag">Vintage</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">vinylmoodmusic@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Urban Oasis</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4.5K saves</strong> -- Urban R&B & hip-hop oasis</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Urban</span>
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Hip-Hop</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Silk & Soul</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Silky smooth soul & modern R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@silkandsoul.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Frequency Lab</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>6K saves</strong> -- Electronic & experimental R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">Experimental R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">frequencylabmusic@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Ambient Nights</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>5K saves</strong> -- Ambient, chill-out & slow R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Ambient</span>
+        <span class="genre-tag">Chill</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Honey Tones</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3.5K saves</strong> -- Sweet neo-soul & warm R&B</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Neo-Soul</span>
+        <span class="genre-tag">R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@honeytones.music</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Midnight Jazz Club</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>4K saves</strong> -- Late-night jazz & soul sessions</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Jazz</span>
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Late Night</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">midnightjazzclub@gmail.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Vibe Check Playlists</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>7K saves</strong> -- Curated vibes, R&B heavy rotation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Vibes</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@vibecheckplaylists</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Cloud Nine Beats</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>2.5K saves</strong> -- Dreamy R&B & cloud rap</div>
+      <div class="curator-meta">
+        <span class="genre-tag">R&B</span>
+        <span class="genre-tag">Cloud Rap</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="small" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Palette Sounds</div>
+        <span class="tier-badge small">Small</span>
+      </div>
+      <div class="curator-playlist"><strong>3K saves</strong> -- Colorful indie & alt R&B palette</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Indie</span>
+        <span class="genre-tag">Alt R&B</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@palettesounds</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Deep Focus Beats</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>38K saves</strong> -- Focus beats, lo-fi, chill study</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Lo-Fi</span>
+        <span class="genre-tag">Focus</span>
+        <span class="genre-tag">Study</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="instagram">
+      <div class="curator-header">
+        <div class="curator-name">Analog Dreams</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>15K saves</strong> -- Analog-inspired electronic & soul</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Electronic</span>
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Analog</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">@analogdreams.fm</span>
+        <span class="submit-method dm">Instagram DM</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="email">
+      <div class="curator-header">
+        <div class="curator-name">Tune Collective</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>12K saves</strong> -- Collaborative multi-genre curation</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Multi-Genre</span>
+        <span class="genre-tag">Collaborative</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">tune@tunecollective.com</span>
+        <span class="submit-method email-method">Email</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="medium" data-method="submithub">
+      <div class="curator-header">
+        <div class="curator-name">Electric Soul Club</div>
+        <span class="tier-badge medium">Medium</span>
+      </div>
+      <div class="curator-playlist"><strong>14K saves</strong> -- Electric soul & future funk</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Soul</span>
+        <span class="genre-tag">Future Funk</span>
+        <span class="genre-tag">Electronic</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method">SubmitHub</span>
+      </div>
+    </div>
+
+    <!-- No results message -->
+    <div class="no-results" id="noResults">No curators match the selected filters. Try a different combination.</div>
+
+  </div>
+
+  <!-- Additional Platforms -->
+  <div class="curators-grid" id="additionalPlatforms">
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">PlaylistPush</div>
+        <span class="tier-badge platform">Platform</span>
+      </div>
+      <div class="curator-playlist"><strong>1K+ curators</strong> -- Paid campaign-based placements</div>
+      <div class="curator-meta">
+        <span class="genre-tag">All Genres</span>
+        <span class="genre-tag">Campaign</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method other-method">$150+ / campaign</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">SoundCampaign</div>
+        <span class="tier-badge platform">Platform</span>
+      </div>
+      <div class="curator-playlist"><strong>1K+ verified curators</strong> -- Targeted playlist campaigns</div>
+      <div class="curator-meta">
+        <span class="genre-tag">All Genres</span>
+        <span class="genre-tag">Verified</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig"></span>
+        <span class="submit-method other-method">$150+ / campaign</span>
+      </div>
+    </div>
+
+    <div class="curator-card glass" data-crm="not-contacted" data-tier="platform" data-method="other">
+      <div class="curator-header">
+        <div class="curator-name">PlaylistMap</div>
+        <span class="tier-badge platform">Platform</span>
+      </div>
+      <div class="curator-playlist"><strong>100K+ playlists</strong> -- Discover & contact curators</div>
+      <div class="curator-meta">
+        <span class="genre-tag">Discovery</span>
+        <span class="genre-tag">Database</span>
+      </div>
+      <div class="curator-footer">
+        <span class="curator-ig">playlistmap.com</span>
+        <span class="submit-method free">FREE to browse</span>
+      </div>
+    </div>
   </div>
 
   <!-- Strategy Section -->
@@ -1288,44 +3542,231 @@
     cards.forEach(card => observer.observe(card));
   }
 
-  // Filter functionality
+  // Active filter state
+  let activeTierFilter = 'all';
+  let activeMethodFilter = 'all';
+  let activeCrmFilter = 'all';
+
+  // CRM status cycle order
+  const CRM_STATUSES = ['not-contacted', 'reached-out', 'accepted', 'declined', 'follow-up'];
+  const CRM_LABELS = {
+    'not-contacted': 'Not Contacted',
+    'reached-out': 'Reached Out',
+    'accepted': 'Accepted',
+    'declined': 'Declined',
+    'follow-up': 'Follow Up'
+  };
+
+  // localStorage key
+  const CRM_STORAGE_KEY = 'playlist-intel-crm';
+
+  // Load CRM data from localStorage
+  function loadCrmData() {
+    try {
+      const data = JSON.parse(localStorage.getItem(CRM_STORAGE_KEY));
+      return data || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  // Save CRM data to localStorage
+  function saveCrmData(data) {
+    localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // Get a unique key for each card based on curator name
+  function getCardKey(card) {
+    const name = card.querySelector('.curator-name');
+    return name ? name.textContent.trim() : '';
+  }
+
+  // Inject CRM badges into all curator footers and restore saved statuses
+  function initCrmBadges() {
+    const cards = document.querySelectorAll('#curatorsGrid .curator-card');
+    const savedData = loadCrmData();
+
+    cards.forEach(card => {
+      const footer = card.querySelector('.curator-footer');
+      if (!footer) return;
+
+      const key = getCardKey(card);
+      const savedStatus = (key && savedData[key]) ? savedData[key] : 'not-contacted';
+
+      // Set the data-crm attribute
+      card.dataset.crm = savedStatus;
+
+      // Create the CRM badge
+      const badge = document.createElement('span');
+      badge.className = 'crm-badge';
+      badge.dataset.status = savedStatus;
+      badge.innerHTML = '<span class="crm-badge-dot"></span>' + CRM_LABELS[savedStatus];
+      badge.title = 'Click to change status';
+
+      // Click handler to cycle through statuses
+      badge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentStatus = badge.dataset.status;
+        const currentIndex = CRM_STATUSES.indexOf(currentStatus);
+        const nextIndex = (currentIndex + 1) % CRM_STATUSES.length;
+        const nextStatus = CRM_STATUSES[nextIndex];
+
+        badge.dataset.status = nextStatus;
+        badge.innerHTML = '<span class="crm-badge-dot"></span>' + CRM_LABELS[nextStatus];
+        card.dataset.crm = nextStatus;
+
+        // Save to localStorage
+        const data = loadCrmData();
+        const cardKey = getCardKey(card);
+        if (cardKey) {
+          data[cardKey] = nextStatus;
+          saveCrmData(data);
+        }
+
+        // Update CRM filter counts
+        updateCrmCounts();
+
+        // Re-apply filters if CRM filter is active
+        if (activeCrmFilter !== 'all') {
+          applyFilters();
+        }
+      });
+
+      footer.appendChild(badge);
+    });
+  }
+
+  // Update CRM filter counts
+  function updateCrmCounts() {
+    const cards = document.querySelectorAll('#curatorsGrid .curator-card');
+    const counts = { all: 0, 'not-contacted': 0, 'reached-out': 0, 'accepted': 0, 'declined': 0, 'follow-up': 0 };
+
+    cards.forEach(card => {
+      const status = card.dataset.crm || 'not-contacted';
+      counts.all++;
+      if (counts[status] !== undefined) {
+        counts[status]++;
+      }
+    });
+
+    document.getElementById('crm-count-all').textContent = counts.all;
+    document.getElementById('crm-count-not-contacted').textContent = counts['not-contacted'];
+    document.getElementById('crm-count-reached-out').textContent = counts['reached-out'];
+    document.getElementById('crm-count-accepted').textContent = counts['accepted'];
+    document.getElementById('crm-count-declined').textContent = counts['declined'];
+    document.getElementById('crm-count-follow-up').textContent = counts['follow-up'];
+  }
+
+  // Apply combined filters (tier + method + CRM)
+  function applyFilters() {
+    const cards = document.querySelectorAll('#curatorsGrid .curator-card');
+    let delay = 0;
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      card.classList.remove('visible');
+      card.style.animationDelay = '';
+
+      const tierMatch = activeTierFilter === 'all' || card.dataset.tier === activeTierFilter;
+      const methodMatch = activeMethodFilter === 'all' || card.dataset.method === activeMethodFilter;
+      const crmMatch = activeCrmFilter === 'all' || card.dataset.crm === activeCrmFilter;
+
+      if (tierMatch && methodMatch && crmMatch) {
+        card.classList.remove('hidden');
+        card.style.animationDelay = `${delay * 0.04}s`;
+        requestAnimationFrame(() => {
+          card.classList.add('visible');
+        });
+        delay++;
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Show/hide no results message
+    const noResults = document.getElementById('noResults');
+    if (visibleCount === 0) {
+      noResults.classList.add('visible');
+    } else {
+      noResults.classList.remove('visible');
+    }
+  }
+
+  // Filter functionality -- Tier
   function initFilters() {
     const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.curator-card');
 
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-        let delay = 0;
-
-        cards.forEach(card => {
-          card.classList.remove('visible');
-          card.style.animationDelay = '';
-
-          if (filter === 'all' || card.dataset.tier === filter) {
-            card.classList.remove('hidden');
-            card.style.animationDelay = `${delay * 0.05}s`;
-            // Force re-trigger animation
-            requestAnimationFrame(() => {
-              card.classList.add('visible');
-            });
-            delay++;
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        activeTierFilter = btn.dataset.filter;
+        applyFilters();
       });
     });
+  }
+
+  // Filter functionality -- Method toggles
+  function initMethodFilters() {
+    const toggles = document.querySelectorAll('.method-toggle');
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggles.forEach(t => t.classList.remove('active'));
+        toggle.classList.add('active');
+        activeMethodFilter = toggle.dataset.methodFilter;
+        applyFilters();
+      });
+    });
+  }
+
+  // Filter functionality -- CRM toggles
+  function initCrmFilters() {
+    const toggles = document.querySelectorAll('.crm-toggle');
+
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggles.forEach(t => t.classList.remove('active'));
+        toggle.classList.add('active');
+        activeCrmFilter = toggle.dataset.crmFilter;
+        applyFilters();
+      });
+    });
+  }
+
+  // Update method counts
+  function updateMethodCounts() {
+    const cards = document.querySelectorAll('#curatorsGrid .curator-card');
+    const counts = { all: 0, submithub: 0, instagram: 0, email: 0, other: 0 };
+
+    cards.forEach(card => {
+      const method = card.dataset.method;
+      if (method) {
+        counts.all++;
+        if (counts[method] !== undefined) {
+          counts[method]++;
+        }
+      }
+    });
+
+    document.getElementById('method-count-all').textContent = counts.all;
+    document.getElementById('method-count-submithub').textContent = counts.submithub;
+    document.getElementById('method-count-instagram').textContent = counts.instagram;
+    document.getElementById('method-count-email').textContent = counts.email;
+    document.getElementById('method-count-other').textContent = counts.other;
   }
 
   // Init
   document.addEventListener('DOMContentLoaded', () => {
     animateCountUp();
+    initCrmBadges();
     initCardAnimations();
     initFilters();
+    initMethodFilters();
+    initCrmFilters();
+    updateMethodCounts();
+    updateCrmCounts();
   });
 </script>
 
